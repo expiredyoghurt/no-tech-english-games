@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>No Tech English Games</title>
+<style>
+:root{--scale:1;--bg:#fbf7ee;--ink:#1d2433;--mute:#5b6478;--card:#fff;--line:#e6dfcd;--good:#1f9d55;--bad:#d64545;--c:#1d2433}
+*{box-sizing:border-box}
+html{font-size:calc(16px*var(--scale))}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;line-height:1.45}
+button,input,select{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+header.top{position:sticky;top:0;z-index:10;background:var(--ink);color:#fff;display:flex;gap:.5rem;align-items:center;padding:.55rem 1rem;flex-wrap:wrap}
+header.top h1{font-size:1.1rem;margin:0;flex:1;min-width:9rem}
+.tb{background:#ffffff26;border:0;color:#fff;border-radius:.5rem;padding:.35rem .7rem;cursor:pointer}
+.tb:hover{background:#ffffff40}
+main{max-width:74rem;margin:0 auto;padding:1rem}
+.hero h2{font-size:1.9rem;margin:.3rem 0}
+.hero p{color:var(--mute);margin:.2rem 0 .9rem}
+.controls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem}
+.controls input{flex:1;min-width:12rem;padding:.6rem .8rem;border:2px solid var(--line);border-radius:.7rem;background:#fff}
+.chips{display:flex;gap:.4rem;flex-wrap:wrap;margin:.4rem 0}
+.chip{border:2px solid var(--line);background:#fff;border-radius:2rem;padding:.25rem .8rem;cursor:pointer;font-size:.9rem}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.catname{margin:1.2rem 0 .5rem;font-size:1.05rem;color:var(--c);border-bottom:2px solid var(--c);padding-bottom:.2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:.9rem}
+.gcard{background:var(--card);border:2px solid var(--line);border-top:6px solid var(--c);border-radius:1rem;padding:.8rem .9rem;display:flex;flex-direction:column;gap:.2rem}
+.gcard:hover{transform:translateY(-2px);box-shadow:0 6px 16px #0001}
+.gcard .n{font-size:.8rem;color:var(--c);font-weight:700}
+.gcard .t{font-size:1.15rem;font-weight:700}
+.gcard .p{font-size:.85rem;color:var(--mute)}
+.gcard .d{font-size:.9rem}
+.ghead{background:var(--c);color:#fff;border-radius:1rem;padding:1rem 1.2rem;margin-bottom:1rem}
+.ghead h2{margin:0;font-size:2rem}
+.ghead .meta{opacity:.92}
+.nav{display:flex;justify-content:space-between;gap:.5rem;margin:.6rem 0;flex-wrap:wrap}
+.nav a,.back{background:#fff;border:2px solid var(--line);border-radius:.6rem;padding:.3rem .8rem;font-size:.9rem;display:inline-block}
+.tabs{display:flex;gap:.4rem;margin-bottom:1rem}
+.tab{flex:1;border:2px solid var(--line);background:#fff;border-radius:.8rem;padding:.6rem;cursor:pointer;font-weight:700}
+.tab.on{background:var(--c);color:#fff;border-color:var(--c)}
+.steps{font-size:1.25rem;padding-left:1.6rem}
+.steps li{margin:.5rem 0}
+.note{background:#fff;border-left:6px solid var(--c);border-radius:.5rem;padding:.6rem .9rem;margin:.7rem 0;font-size:1.05rem}
+.toolgrid{display:grid;grid-template-columns:1fr 19rem;gap:1rem;align-items:start}
+@media(max-width:820px){.toolgrid{grid-template-columns:1fr}}
+.panel{background:#fff;border:2px solid var(--line);border-radius:1rem;padding:.8rem;margin-bottom:.9rem}
+.panel h4{margin:0 0 .4rem;font-size:.95rem;color:var(--mute)}
+.btnrow{display:flex;gap:.5rem;flex-wrap:wrap;margin:.6rem 0}
+.btn{background:var(--c);color:#fff;border:0;border-radius:.7rem;padding:.6rem 1.1rem;font-weight:700;cursor:pointer;font-size:1rem}
+.btn:hover{filter:brightness(1.1)}
+.btn.alt{background:#fff;color:var(--c);border:2px solid var(--c)}
+.btn.ghost{background:#fff;color:var(--ink);border:2px solid var(--line)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.bigcard{background:#fff;border:3px solid var(--c);border-radius:1.2rem;padding:1.4rem;min-height:12rem;display:flex;align-items:center;justify-content:center;text-align:center;flex-direction:column;gap:.8rem}
+.bigcard.empty{color:var(--mute);border-style:dashed;font-size:1.2rem}
+.big{font-size:clamp(2rem,6vw,3.6rem);font-weight:800;line-height:1.1}
+.mid{font-size:clamp(1.3rem,3.5vw,2.1rem);font-weight:700}
+.ph{font-size:1.4rem;color:var(--mute)}
+.muted{color:var(--mute)}
+.ans{font-size:1.5rem;color:var(--good);font-weight:700}
+.tag{display:inline-block;border-radius:2rem;padding:.2rem .8rem;margin:.15rem;font-size:1.2rem;background:#eee}
+.tag.bad{background:#fde4e4;color:#a12525;font-weight:700}
+.forbid{display:flex;flex-wrap:wrap;justify-content:center}
+.catlabel{font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--c);font-weight:700}
+.time{font-size:3.4rem;font-weight:800;text-align:center;font-variant-numeric:tabular-nums}
+.bar{height:.5rem;background:#eee;border-radius:1rem;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--c);width:100%;transition:width .1s linear}
+.timer.low .time{color:var(--bad)}
+.timer.done{animation:flash .6s 4}
+@keyframes flash{50%{background:#fde4e4}}
+.team{display:flex;align-items:center;gap:.4rem;margin:.3rem 0}
+.team input{flex:1;min-width:0;border:2px solid var(--line);border-radius:.5rem;padding:.3rem .5rem}
+.team .pts{font-size:1.6rem;font-weight:800;min-width:2.2rem;text-align:center}
+.team button,.sbtn{border:2px solid var(--line);background:#fff;border-radius:.5rem;width:2.2rem;height:2.2rem;cursor:pointer;font-weight:800}
+.cnum{font-size:3rem;font-weight:800;text-align:center}
+.cmsg{text-align:center;color:var(--mute);margin:.3rem 0}
+.low .cnum{color:var(--bad)}
+details.bank{background:#fff;border:2px solid var(--line);border-radius:1rem;padding:.6rem .9rem;margin-top:1rem}
+details.bank summary{cursor:pointer;font-weight:700}
+details.bank ul{columns:2 14rem;padding-left:1.2rem;margin:.6rem 0 0}
+details.bank li{margin:.2rem 0;break-inside:avoid}
+.hands{display:grid;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));gap:.8rem;margin-top:.8rem}
+.cards{display:flex;flex-wrap:wrap;gap:.35rem;margin:.4rem 0}
+.cards.blur{filter:blur(8px);pointer-events:none;user-select:none}
+.cd{border:2px solid var(--line);border-radius:.6rem;padding:.25rem .6rem;cursor:pointer;background:#fff;font-size:.95rem}
+.cd.chr{background:#e8f0ff}.cd.itm{background:#fff4d6}.cd.plc{background:#e4f6e8}.cd.evt{background:#fde8f0}.cd.end{background:#2b2f3f;color:#ffd96a}.cd.red{background:#fde8e8}
+.cd.vcb{background:#efe6ff}.cd.used{opacity:.35;text-decoration:line-through}
+.bgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;max-width:26rem;margin:0 auto}
+.bgrid.blur .tile{filter:blur(10px)}
+.tile{aspect-ratio:1;background:#fffbe8;border:3px solid var(--c);border-radius:.8rem;display:flex;align-items:center;justify-content:center;font-size:clamp(1.8rem,6vw,3rem);font-weight:800}
+.dice{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
+.die{width:5.2rem;height:5.2rem;border:3px solid var(--c);border-radius:1rem;background:#fff;font-size:2.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cn{display:grid;gap:.4rem}
+.cn-c{overflow-wrap:anywhere;border:2px solid var(--line);background:#fff;border-radius:.6rem;padding:.9rem .2rem;font-weight:700;font-size:clamp(.85rem,2.2vw,1.3rem);cursor:pointer;text-transform:uppercase}
+.cn-c.key{border-width:5px}
+.cn-c.red.key,.cn-c.red.up{border-color:#d64545}.cn-c.blue.key,.cn-c.blue.up{border-color:#2a6fd1}
+.cn-c.neutral.key{border-color:#c8b88a}.cn-c.assassin.key{border-color:#111}
+.cn-c.up.red{background:#d64545;color:#fff}.cn-c.up.blue{background:#2a6fd1;color:#fff}.cn-c.up.neutral{background:#e9dfc2}.cn-c.up.assassin{background:#111;color:#fff}
+.gal{width:12rem;height:12rem;stroke:var(--ink);stroke-width:5;stroke-linecap:round;fill:none}
+.gal .pt{stroke:var(--bad)}
+.hw{display:inline-flex;gap:.25rem;margin:.3rem .8rem}
+.hl{min-width:2rem;height:2.6rem;border-bottom:4px solid var(--ink);text-align:center;font-size:1.8rem;font-weight:800}
+.hl.punct{border-bottom:0}.hl.miss{color:var(--bad)}
+.kb{display:flex;flex-direction:column;align-items:center;gap:.3rem;margin:.6rem 0}
+.kb div{display:flex;gap:.3rem}
+.kb button{width:2.4rem;height:2.8rem;border:2px solid var(--line);background:#fff;border-radius:.5rem;font-weight:800;cursor:pointer}
+.kb button.ok{background:#d9f4e2}.kb button.no{background:#fde4e4;opacity:.6}
+.chain{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0}
+.chain span{background:#fff;border:2px solid var(--c);border-radius:2rem;padding:.2rem .8rem;font-size:1.2rem}
+.fu{font-size:clamp(2rem,7vw,4rem);font-weight:800}
+.fu.f{color:var(--good)}.fu.u{color:var(--bad)}
+.sent{font-size:clamp(1.5rem,4vw,2.4rem);font-weight:700;min-height:4rem}
+input.txt{padding:.6rem .8rem;border:2px solid var(--line);border-radius:.7rem;font-size:1.1rem;flex:1;min-width:8rem}
+table.t{border-collapse:collapse;width:100%}
+table.t td,table.t th{border:1px solid var(--line);padding:.35rem .6rem;text-align:left}
+.vrow{display:grid;grid-template-columns:2.6rem 11rem 1fr;gap:.6rem;border-bottom:1px solid var(--line);padding:.45rem .2rem;font-size:1.05rem}.vrow b{font-size:1.15rem}.vd.blur{filter:blur(7px);cursor:pointer}.vl{background:#fff;border:2px solid var(--line);border-radius:1rem;padding:.4rem .8rem}.lvl{font-size:.75rem;font-weight:700;border-radius:.4rem;padding:.1rem .4rem;color:#fff;align-self:start;text-align:center}.lvl5{background:#128a80}.lvl6{background:#6150d6}@media(max-width:600px){.vrow{grid-template-columns:2.6rem 1fr}.vrow .vd{grid-column:1/-1}}
+footer{text-align:center;color:var(--mute);padding:2rem 1rem;font-size:.85rem}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1><a href="#/">📚 English Games Hub · P5/6</a></h1>
+  <button class="tb" id="smaller" title="Smaller text">A−</button>
+  <button class="tb" id="larger" title="Larger text">A+</button>
+  <button class="tb" id="fs" title="Fullscreen">⛶ Fullscreen</button>
+</header>
+<main id="app"></main>
+<footer>Instructions and resources for 20 classroom English games. Works offline — no sign-in, no data stored.</footer>
+
+<script>
+/* ---------- helpers ---------- */
+const h=(tag,props,...kids)=>{const e=document.createElement(tag);for(const[k,v]of Object.entries(props||{})){if(k==='class')e.className=v;else if(k==='html')e.innerHTML=v;else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else if(v!==false&&v!=null)e.setAttribute(k,v);}for(const kid of kids.flat(2)){if(kid==null||kid===false)continue;e.append(kid.nodeType?kid:document.createTextNode(kid));}return e;};
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const range=(a,b)=>Array.from({length:b-a+1},(_,i)=>a+i);
+const makeDeck=a=>{let q=[];return{next(){if(!q.length)q=shuffle(a);return q.pop();}};};
+let cleanups=[];const onLeave=f=>cleanups.push(f);
+let ac;const audio=()=>{try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();}catch(e){}};
+const beep=()=>{try{audio();[0,.25,.5].forEach(t=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.value=.15;o.connect(g);g.connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+.15);});}catch(e){}};
+const chipRow=(opts,initial,onPick)=>{const row=h('div',{class:'chips'});opts.forEach(([k,t])=>{const b=h('button',{class:'chip'+(k===initial?' on':''),onclick:()=>{[...row.children].forEach(x=>x.classList.toggle('on',x===b));onPick(k);}},t);row.append(b);});return row;};
+
+/* ---------- widgets ---------- */
+function Timer(presets=[60],o={}){
+  let total=presets[0],left=total,iv=null,running=false,endAt=0;
+  const disp=h('div',{class:'time'}),bar=h('div',{class:'bar'},h('i')),btn=h('button',{class:'btn',onclick:()=>toggle()},'▶ Start');
+  const lab=p=>p<60?p+'s':(p%60?Math.floor(p/60)+':'+String(p%60).padStart(2,'0'):(p/60)+' min');
+  const chips=presets.length>1?chipRow(presets.map(p=>[p,lab(p)]),total,p=>reset(p)):null;
+  const root=h('div',{class:'panel timer'},h('h4',{},o.title||'⏱ Timer'),disp,bar,chips,h('div',{class:'btnrow'},btn,h('button',{class:'btn ghost',onclick:()=>reset()},'↺ Reset')));
+  const fmt=s=>{s=Math.max(0,Math.ceil(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
+  function paint(){disp.textContent=fmt(left);bar.firstChild.style.width=(total?left/total*100:0)+'%';root.classList.toggle('low',running&&left<=10&&total>10);btn.textContent=running?'⏸ Pause':(left<total&&left>0?'▶ Resume':'▶ Start');}
+  function tick(){left=(endAt-Date.now())/1000;if(left<=0){left=0;clearInterval(iv);running=false;paint();root.classList.add('done');beep();o.onEnd&&o.onEnd();}else paint();}
+  function start(sec){if(sec!=null){total=sec;left=sec;}if(left<=0)left=total;root.classList.remove('done');endAt=Date.now()+left*1000;clearInterval(iv);iv=setInterval(tick,100);running=true;audio();paint();}
+  function pause(){if(!running)return;left=(endAt-Date.now())/1000;clearInterval(iv);running=false;paint();}
+  function reset(sec){clearInterval(iv);running=false;if(sec!=null)total=sec;left=total;root.classList.remove('done');paint();}
+  function toggle(){running?pause():start();}
+  onLeave(()=>clearInterval(iv));paint();
+  return{root,start,pause,reset,toggle,get running(){return running;}};
+}
+function Scoreboard(o={}){
+  const label=o.label||'Team',teams=[];const root=h('div',{class:'panel'});
+  function draw(){root.replaceChildren(h('h4',{},'🏆 Scoreboard'),...teams.map(t=>h('div',{class:'team'},h('input',{value:t.name,'aria-label':'Name',oninput:e=>{t.name=e.target.value;}}),h('button',{onclick:()=>{t.pts--;draw();}},'−'),h('div',{class:'pts'},String(t.pts)),h('button',{onclick:()=>{t.pts++;draw();}},'+'))),h('div',{class:'btnrow'},h('button',{class:'btn ghost',onclick:()=>{teams.push({name:label+' '+(teams.length+1),pts:0});draw();}},'+ '+label),teams.length>1&&h('button',{class:'btn ghost',onclick:()=>{teams.pop();draw();}},'− Remove'),h('button',{class:'btn ghost',onclick:()=>{teams.forEach(t=>t.pts=0);draw();}},'Zero')));}
+  for(let i=0;i<(o.n||2);i++)teams.push({name:label+' '+(i+1),pts:0});draw();return{root};
+}
+function Counter(o){
+  let n=0,max=o.maxes?o.maxes[0]:o.max;const num=h('div',{class:'cnum'}),msg=h('div',{class:'cmsg'});
+  const chips=o.maxes?chipRow(o.maxes.map(x=>[x,x+' max']),max,x=>{max=x;n=0;paint();}):null;
+  const root=h('div',{class:'panel'},h('h4',{},o.title),chips,num,msg,h('div',{class:'btnrow'},h('button',{class:'btn',onclick:()=>{if(n<max){n++;paint();}}},o.btn||'+1'),h('button',{class:'btn ghost',onclick:()=>{n=0;paint();}},'↺ Reset')));
+  function paint(){num.textContent=o.down?(max-n):n+' / '+max;msg.textContent=o.down?(n>=max?(o.endMsg||'Out of questions!'):'Asked '+n+' of '+max):(n>=max?(o.endMsg||'Limit reached!'):'');root.classList.toggle('low',n>=max);}
+  paint();return{root};
+}
+function bank(m,title,list){m.append(h('details',{class:'bank'},h('summary',{},title+' ('+list.length+')'),h('ul',{},list.map(x=>h('li',{html:x})))));}
+function cardTool(m,s,o){
+  let items=o.items,deck=makeDeck(items),cur=null,shown=true;const refs={};
+  if(o.cats)m.append(chipRow([['All','All'],...o.cats.map(c=>[c,c])],'All',c=>{items=c==='All'?o.items:o.items.filter(i=>i.c===c);deck=makeDeck(items);cur=null;paint();}));
+  const card=h('div',{class:'bigcard'});
+  const next=h('button',{class:'btn',onclick:()=>{const it=deck.next();cur=o.prep?o.prep(it):it;shown=!o.hidden;paint();}},o.btn||'Next card ▶');
+  const rev=(o.hidden||o.partial)?h('button',{class:'btn alt',onclick:()=>{shown=!shown;paint();}},o.revealLabel||'👁 Reveal / hide'):null;
+  function paint(){card.classList.toggle('empty',!cur);if(!cur){card.textContent=o.empty||'Press “'+(o.btn||'Next card ▶')+'” to begin';return;}card.replaceChildren(o.hidden&&!o.partial&&!shown?h('div',{class:'ph'},'🙈 Card hidden — only the player should look!'):o.render(cur,shown));}
+  m.append(card,h('div',{class:'btnrow'},next,rev));paint();refs.paint=paint;
+  if(o.timer){refs.timer=Timer(o.timer);s.append(refs.timer.root);}
+  if(o.score){refs.score=Scoreboard(o.score);s.append(refs.score.root);}
+  if(o.counter){refs.counter=Counter(o.counter);s.append(refs.counter.root);}
+  if(o.bank)bank(m,o.bank.title,(o.bankItems||o.items).map(o.bank.fmt));
+  return refs;
+}
+function dealer(m,o){
+  let np=o.minP;
+  const sel=h('select',{class:'chip',onchange:e=>{np=+e.target.value;}},range(o.minP,o.maxP).map(n=>h('option',{value:n},n+' players')));
+  const out=h('div',{class:'hands'});
+  function deal(){
+    const per=o.perFn?o.perFn(np):o.per;const pool=shuffle(typeof o.pool==='function'?o.pool():o.pool),ex=o.extra?shuffle(o.extra):[],bn=o.bonus?shuffle(o.bonus.items):[];
+    out.replaceChildren(...range(1,np).map(i=>{
+      const cards=pool.splice(0,per).concat(bn.splice(0,o.bonus?o.bonus.per:0),ex.splice(0,1));
+      const box=h('div',{class:'cards blur'},cards.map(c=>h('div',{class:'cd '+c.cls,onclick:e=>e.currentTarget.classList.toggle('used')},c.d?[c.t,h('small',{style:'display:block;opacity:.75;max-width:14rem'},c.d)]:c.t)));
+      const b=h('button',{class:'btn ghost',onclick:()=>{box.classList.toggle('blur');b.textContent=box.classList.contains('blur')?'👁 Show hand':'🙈 Hide hand';}},'👁 Show hand');
+      return h('div',{class:'panel'},h('h4',{},'Player '+i+' · '+cards.length+' cards'),box,b);
+    }));
+  }
+  m.append(h('div',{class:'btnrow'},sel,h('button',{class:'btn',onclick:deal},'🃏 Deal cards')),h('div',{class:'muted'},'Tap a card to cross it off when it is played.'),out);
+}
+
+/* ---------- content ---------- */
+const TABOO=[['TEACHER','school,student,educate,classroom,lesson'],['BICYCLE','pedal,wheels,ride,helmet,handlebar'],['LIBRARY','books,borrow,read,quiet,librarian'],['HAWKER CENTRE','food,stalls,eat,Singapore,cheap'],['MRT','train,station,commute,track,Singapore'],['VOLCANO','lava,mountain,erupt,hot,ash'],['ELECTRICITY','power,current,switch,plug,light'],['PRINCIPAL','school,headmaster,boss,office,teachers'],['HOMEWORK','school,assignment,teacher,do,take'],['BIRTHDAY','cake,candles,party,age,present'],['ASTRONAUT','space,rocket,moon,suit,NASA'],['SUPERMARKET','buy,groceries,trolley,shop,food'],['ENVIRONMENT','nature,pollution,green,recycle,planet'],['COURAGE','brave,fear,hero,bold,scared'],['RAINBOW','colours,rain,sky,arch,sun'],['DURIAN','fruit,smell,king,spiky,thorns'],['LIGHTHOUSE','ship,sea,light,tower,coast'],['FRIENDSHIP','friend,buddy,close,together,pal']].map(([w,f])=>({c:'General',w,f:f.split(',')}));
+const BALD=[['petrichor','the pleasant earthy smell after rain falls on dry ground'],['susurrus','a soft whispering or rustling sound'],['defenestrate','to throw someone or something out of a window'],['obsequious','too eager to please or obey'],['quixotic','extremely idealistic and not practical'],['ephemeral','lasting for a very short time'],['mellifluous','sweet-sounding and pleasant to hear'],['pusillanimous','lacking courage; timid'],['lollygag','to waste time by dawdling'],['gobbledygook','confusing, meaningless language'],['bamboozle','to trick or confuse someone'],['cacophony','a harsh mixture of loud sounds'],['kerfuffle','a fuss or commotion'],['nincompoop','a silly or foolish person'],['skedaddle','to run away quickly'],['brouhaha','a noisy, overexcited reaction'],['floccinaucinihilipilification','the act of judging something to be worthless'],['serendipity','finding something good by happy chance']].map(([w,d])=>({c:'Classic obscure',w,d}));
+const SC_CATS=['Countries','Animals','Foods','Verbs','Authors','Things in a classroom','Fruits','Jobs','Sports','Things that are cold','Cities','Adjectives to describe a person','Things in a kitchen','Parts of the body','Hobbies','Items of clothing','Places in Singapore','Things at the beach','Musical instruments','Vehicles','Things that are round','Boys’ names','Girls’ names','Things in a school bag','Emotions','Drinks','Insects','Flowers','Things at a hawker centre','School subjects','Things that make noise','Rivers or mountains','Things you can fold','Things that are sticky','Adverbs'];
+const TWENTYQ=[['Person','Joseph Schooling'],['Person','Sir Stamford Raffles'],['Person','Albert Einstein'],['Person','Sherlock Holmes'],['Person','Your school principal'],['Place','The Merlion'],['Place','Marina Bay Sands'],['Place','Changi Airport'],['Place','Sentosa'],['Place','Gardens by the Bay'],['Place','The Eiffel Tower'],['Thing','An umbrella'],['Thing','An EZ-Link card'],['Thing','A water bottle'],['Thing','A whiteboard marker'],['Thing','A kite'],['Thing','A mirror'],['Thing','A clock'],['Thing','A thermometer'],['Thing','A backpack']].map(([c,w])=>({c,w}));
+const OUAT_CHR=['a nervous dragon','a retired spy','a talking parrot','a clumsy robot','a lost tourist','a brave hawker','a ghost librarian','a sleepy giant','a tiny detective','a grumpy cat'];
+const OUAT_ITM=['a rusty key','a golden durian','a broken umbrella','a magic marker','a mysterious letter','a glowing stone','a torn map','a silver whistle','an old suitcase','a cracked mirror'];
+const OUAT_PLC=['a haunted school','an underground MRT station','a floating island','a hawker centre at midnight','a lighthouse','a rainforest','an abandoned cinema','a snowy mountain','a busy night market','a secret garden'];
+const OUAT_EVT=['a sudden storm','a surprise party','a power cut','a secret is revealed','someone gets lost','a race against time','an unexpected friendship','a promise is broken','a mysterious noise','a big mistake'];
+const OUAT_END=['…and nothing was ever the same again.','…and the key was returned to its rightful place.','…and that is why we always double-check our bags.','…and they lived happily ever after, or so they thought.','…and from that day on, the town was never the same.','…and it was all just a dream. Or was it?','…and the truth was finally told.','…and the adventure had only just begun.'];
+const JAM=['My favourite food','Robots','Rainy days','The best dish at the school canteen','If I were the principal','A world without phones','Pets','The MRT','Durians','Football','Superpowers','Birthdays','A day at the beach','Why we have homework','My dream holiday','Friendship','The year 2050','Recess','Morning assembly','The haze','Hawker centres','Learning a new language'];
+const FU=['Once there was a boy who found a treasure map.','A girl woke up to find her classroom had vanished.','A hawker uncle invented a robot that could cook.','The school bus took a wrong turn.','A cat wandered into the school hall during assembly.','Two friends discovered a door at the back of the library.','The MRT stopped between two stations.','A new student arrived with a mysterious suitcase.','It rained for seven days straight.','A parrot began speaking in the principal’s voice.'];
+const TTL=[['Singapore',[['Singapore gained independence on 9 August 1965.',1],['The Merlion has the head of a tiger and the body of a fish.',0],['Singapore has four official languages.',1]]],['Singapore',[['Changi Airport’s Jewel has a huge indoor waterfall.',1],['Singapore is the largest country in Southeast Asia by land area.',0],['Bukit Timah Hill is Singapore’s highest natural point.',1]]],['Science',[['Water boils at 100°C at sea level.',1],['Sound travels faster through air than through water.',0],['Plants take in carbon dioxide during photosynthesis.',1]]],['Science',[['The Sun is a star.',1],['Adult humans have 206 bones.',1],['The human heart has three chambers.',0]]],['Science',[['The Pacific is the largest ocean on Earth.',1],['A spider is an insect.',0],['Mercury is the planet closest to the Sun.',1]]],['English',[['“Their” and “there” are homophones.',1],['A simile compares two things using “like” or “as”.',1],['An adverb is a word that describes a noun.',0]]],['English',[['Onomatopoeia is a word that imitates a sound.',1],['A preposition is a word that describes an action.',0],['A synonym is a word with a similar meaning to another.',1]]]].map(([c,st])=>({c,st}));
+const WHO=[['Historical figure','Sir Stamford Raffles'],['Historical figure','Yusof Ishak'],['Historical figure','Lee Kuan Yew'],['Historical figure','Sang Nila Utama'],['Historical figure','Marie Curie'],['Historical figure','Albert Einstein'],['Historical figure','Isaac Newton'],['Historical figure','Mahatma Gandhi'],['Book character','Matilda'],['Book character','Harry Potter'],['Book character','Hermione Granger'],['Book character','Sherlock Holmes'],['Book character','Charlie Bucket'],['Book character','Peter Pan'],['Book character','Heidi']].map(([c,w])=>({c,w}));
+const BOGGLE=['AAEEGN','ABBJOO','ACHOPS','AFFKPS','AOOTTW','CIMOTU','DEILRX','DELRVY','DISTTY','EEGHNW','EEINSU','EHRTVW','EIOSST','ELRTTY','HIMNQU','HLNNRZ'];
+const CONTACT=['elephant','library','football','telescope','rainforest','umbrella','chocolate','astronaut','dictionary','volcano','lighthouse','adventure','bicycle','kitchen','mountain','festival','treasure','computer'];
+const ASSOC=['ocean','school','food','rain','space','football','music','forest','holiday','night','garden','money'];
+const HM={'Idioms':[['piece of cake','something very easy'],['break the ice','start a conversation in an awkward situation'],['under the weather','feeling unwell'],['spill the beans','reveal a secret'],['hit the books','study hard'],['once in a blue moon','very rarely'],['cost an arm and a leg','very expensive'],['burn the midnight oil','work late into the night']],'Book titles':[['Charlotte’s Web','by E. B. White'],['Matilda','by Roald Dahl'],['The BFG','by Roald Dahl'],['Holes','by Louis Sachar'],['Wonder','by R. J. Palacio'],['Heidi','by Johanna Spyri'],['Black Beauty','by Anna Sewell'],['The Hobbit','by J. R. R. Tolkien']]};
+const PICT=[['Objects','umbrella'],['Objects','lighthouse'],['Objects','bicycle'],['Objects','telescope'],['Objects','ladder'],['Objects','camera'],['Objects','kite'],['Actions','skipping'],['Actions','sneezing'],['Actions','climbing'],['Actions','swimming'],['Actions','baking'],['Actions','whispering'],['Actions','queueing for food'],['Difficult','raining cats and dogs'],['Difficult','time flies'],['Difficult','home sweet home'],['Difficult','freedom'],['Difficult','teamwork'],['Difficult','jealousy'],['Difficult','a piece of cake']].map(([c,w])=>({c,w}));
+const CHAR=[['Books','Matilda'],['Books','The Hobbit'],['Books','Holes'],['Books','The BFG'],['Books','Charlotte’s Web'],['Phrases','Break a leg'],['Phrases','Spill the beans'],['Phrases','Fast asleep'],['Phrases','Take a break'],['Phrases','Time flies'],['Movies','Finding Nemo'],['Movies','Frozen'],['Movies','Moana'],['Movies','Toy Story'],['Movies','The Lion King'],['Actions','Brushing teeth'],['Actions','Riding the MRT'],['Actions','Queueing for chicken rice'],['Actions','Taking an exam'],['Actions','Playing basketball']].map(([c,w])=>({c,w}));
+const ICONS=['🏰','🔑','🌙','🐉','🚀','☂️','🎈','🔥','🐟','🦋','🌋','📖','🎭','⚡','🍎','🚪','🧭','🎁','🕰️','🌳','🐢','🪄','🔔','🎵','👑','🧩','🪞','🏝️','🐘','🎯','🪁','🌈','🧲','🕯️','🚲','🦉','🍜','🌧️','⛵','🔦','🧳','🪐','🐙','🎪','💎','🪙','🧸','🛶','🌻','🐝','🏔️','📞','🛎️','🩴'];
+const CN='apple bridge castle doctor engine forest garden harbour island jungle kitchen ladder mirror nurse ocean pencil queen rocket school tiger umbrella village window yacht zebra anchor bakery candle dragon eagle feather giant hammer igloo jacket kettle lemon magnet needle orange piano quilt rabbit spider teacher uniform violin whale bottle camera desert elephant flute glacier helmet insect jelly kite lantern market noodle owl parrot river saddle tunnel volcano wallet ticket thunder stadium shadow planet pirate passport mountain library lighthouse hospital football festival compass canteen bicycle balloon airport cinema chicken durian'.split(' ');
+const GREEN='scary,funny,fast,slimy,delicious,noisy,brave,boring,enormous,smelly,colourful,dangerous,peaceful,sticky,magical,ancient,shy,cold,sharp,famous'.split(',');
+const RED=['spiders','tests','thunderstorms','pizza','the moon','a hawker centre','homework','elephants','ice cream','a rollercoaster','a school bus','durian','a library','a superhero','bubble tea','a volcano','a robot','the MRT','a birthday party','a giraffe','a snowman','chicken rice','a dragon','recess','a trampoline','the PSLE','a pirate ship','a haunted house','a hamster','a lift'];
+const RELAY=['The cat sat','The boy ran','After school','Yesterday, my friend','The old man','Under the bridge','A tiny bird','Every morning'];
+const RELAY_CH=['Add an adjective','Add a prepositional phrase','Add an adverb','Add a conjunction and a clause','Add a relative clause (who / which / that)','Add a time phrase'];
+const SINGL=[['Can lah, no problem one.','Yes, it’s no problem at all.'],['Aiyo, why you so slow?','Oh dear, why are you so slow?'],['Wah, this one very shiok!','Wow, this is really enjoyable!'],['Don’t play play ah.','Don’t take this lightly.'],['I go first, can or not?','May I go first?'],['He kena scolded by the teacher.','He was scolded by the teacher.'],['Alamak, I forgot to bring my book!','Oh no, I forgot to bring my book!'],['Eat already or not?','Have you eaten yet?'],['This homework very sian.','This homework is very tiresome.'],['Help me tapao the food, can?','Could you help me get the food to take away?'],['Wait ah, I coming soon.','Please wait, I will be there soon.'],['Why you so kiasu?','Why are you so afraid of losing out?'],['Don’t be so blur.','Don’t be so clueless.'],['I got no money leh.','I don’t have any money.']].map(([s,e])=>({s,e}));
+const GLOSS=[['lah / leh / lor','particles added for emphasis or tone'],['shiok','very enjoyable; satisfying'],['sian','bored, tired or fed up'],['kiasu','afraid of losing out'],['blur','clueless or confused'],['kena','to suffer or receive something unpleasant'],['tapao','to take food away'],['alamak / aiyo','expressions of dismay'],['can','“yes” or “it is possible”']];
+
+/* ---------- P5 & P6 vocabulary (200 words) ---------- */
+const VOCAB=[["Rummage", "Search unsystematically and untidily through something.", 5], ["Ransack", "Go through a place stealing things and causing damage.", 5], ["Dawned on", "Realise something for the first time.", 5], ["Capacity", "The maximum amount that something can contain.", 5], ["Dire", "Extremely serious or urgent.", 5], ["Atrocious", "Horrifyingly wicked or cruel.", 5], ["Contemplate", "Think deeply about something.", 5], ["Conservation", "Protecting and preserving natural resources.", 5], ["Deforestation", "The removal of trees from forests.", 5], ["Biodiversity", "The variety of life in the world or a particular ecosystem.", 5], ["Abundant", "Existing or available in large quantities; plentiful.", 5], ["Accommodate", "Provide lodging or sufficient space for.", 5], ["Aggressive", "Ready or likely to attack or confront.", 5], ["Anticipate", "Regard as probable; expect or predict.", 5], ["Apprehensive", "Anxious or fearful that something bad or unpleasant will happen.", 5], ["Astonished", "Greatly surprised or impressed; amazed.", 5], ["Bewildered", "Completely puzzled or confused.", 5], ["Blunder", "A stupid or careless mistake.", 5], ["Boast", "Talk with excessive pride and self-satisfaction about one's achievements.", 5], ["Calamity", "An event causing great and often sudden damage or distress; a disaster.", 5], ["Cautious", "Careful to avoid potential problems or dangers.", 5], ["Commend", "Praise formally or officially.", 5], ["Commotion", "A state of confused and noisy disturbance.", 5], ["Compel", "Force or oblige someone to do something.", 5], ["Conceal", "Keep from sight; hide.", 5], ["Conclude", "Bring something to an end; finish.", 5], ["Confide", "Tell someone about a secret or private matter while trusting them not to repeat it.", 5], ["Congregate", "Gather into a crowd or mass.", 5], ["Conspicuous", "Standing out so as to be clearly visible.", 5], ["Cordially", "In a warm and friendly way.", 5], ["Courteous", "Polite, respectful, and considerate in manner.", 5], ["Deceive", "Deliberately cause someone to believe something that is not true.", 5], ["Decipher", "Succeed in understanding, interpreting, or identifying something.", 5], ["Defiant", "Showing open resistance; bold disobedience.", 5], ["Deliberate", "Done consciously and intentionally.", 5], ["Demolish", "Pull or knock down a building or structure.", 5], ["Depict", "Show or represent by a drawing, photo, or other art form.", 5], ["Desolate", "Deserted of people and in a state of bleak and dismal emptiness.", 5], ["Detest", "Dislike intensely.", 5], ["Devastate", "Destroy or ruin something completely.", 5], ["Diligent", "Having or showing care and conscientiousness in one's work or duties.", 5], ["Diminutive", "Extremely or unusually small.", 5], ["Discard", "Get rid of someone or something as no longer useful or desirable.", 5], ["Disconsolate", "Without consolation or comfort; unhappy.", 5], ["Disguise", "Give a new appearance to a person or thing to hide its true identity.", 5], ["Dismay", "Concern and distress caused by something unexpected.", 5], ["Distinguish", "Recognise or treat someone or something as different.", 5], ["Drench", "Wet thoroughly; soak.", 5], ["Dwindle", "Diminish gradually in size, amount, or strength.", 5], ["Eccentric", "Unconventional and slightly strange behavior or person.", 5], ["Elated", "Make someone ecstatically happy.", 5], ["Eloquent", "Fluent or persuasive in speaking or writing.", 5], ["Empathy", "The ability to understand and share the feelings of another.", 5], ["Encounter", "Unexpectedly be faced with or experience.", 5], ["Endeavour", "Try hard to do or achieve something.", 5], ["Enormous", "Very large in size, quantity, or extent.", 5], ["Exaggerate", "Represent something as being larger, better, or worse than it really is.", 5], ["Exasperated", "Intensely irritated and frustrated.", 5], ["Exotic", "Originating in or characteristic of a distant foreign country.", 5], ["Extinguish", "Cause a fire or light to cease to burn.", 5], ["Famished", "Extremely hungry.", 5], ["Fatigue", "Extreme tiredness resulting from mental or physical exertion.", 5], ["Feat", "An achievement that requires great courage, skill, or strength.", 5], ["Fervently", "Very enthusiastically or passionately.", 5], ["Flee", "Run away from a place or situation of danger.", 5], ["Flourish", "Grow or develop in a healthy or vigorous way.", 5], ["Forbid", "Refuse to allow something.", 5], ["Fragile", "Easily broken or damaged.", 5], ["Frantic", "Distraught with fear, anxiety, or other emotion.", 5], ["Frivolous", "Not having any serious purpose or value.", 5], ["Gaze", "Look steadily and intently, especially in admiration, surprise, or thought.", 5], ["Generous", "Showing a readiness to give more of something than is strictly necessary.", 5], ["Glimpse", "A momentary or partial view.", 5], ["Gloom", "Partial or total darkness; a state of depression or despondency.", 5], ["Grave", "Giving cause for alarm; serious or solemn.", 5], ["Grievance", "A real or imagined wrong or other cause for complaint or protest.", 5], ["Gullible", "Easily persuaded to believe something; credulous.", 5], ["Hazardous", "Risky; dangerous.", 5], ["Hesitate", "Pause in indecision before saying or doing something.", 5], ["Hinder", "Make it difficult for someone to do something or for something to happen.", 5], ["Identical", "Similar in every detail; exactly alike.", 5], ["Illuminate", "Light up; make something visible or bright.", 5], ["Imitate", "Take or follow as a model; copy.", 5], ["Immense", "Extremely large or great, especially in scale or degree.", 5], ["Impartial", "Treating all rivals or disputants equally; fair and just.", 5], ["Impulsive", "Acting or done without forethought.", 5], ["Incessant", "Continuing without pause or interruption.", 5], ["Indifferent", "Having no particular interest or sympathy; unconcerned.", 5], ["Indignant", "Feeling or showing anger or annoyance at what is perceived as unfair treatment.", 5], ["Inevitable", "Certain to happen; unavoidable.", 5], ["Inquisitive", "Having or showing an interest in learning things; curious.", 5], ["Insight", "A deep understanding of a person or thing.", 5], ["Insolent", "Showing a rude and arrogant lack of respect.", 5], ["Intend", "Have a course of action as one's purpose or objective; plan.", 5], ["Jeopardise", "Put someone or something into a situation in which there is a danger of loss, harm, or failure.", 5], ["Jubilant", "Feeling or expressing great happiness and triumph.", 5], ["Loathe", "Feel intense dislike or disgust for.", 5], ["Lucrative", "Producing a great deal of profit.", 5], ["Melancholy", "A feeling of pensive sadness, typically with no obvious cause.", 5], ["Mimic", "Imitate someone or their actions or words, especially in order to entertain or ridicule.", 5], ["Accumulate", "To gather or acquire a growing number or quantity over time.", 6], ["Diminish", "To reduce or be reduced in size, importance, or strength.", 6], ["Lament", "To express deep grief, sadness, or regret about something.", 6], ["Vividly", "In a way that is very clear, powerful, and detailed in your mind.", 6], ["Accustomed", "Familiar with something through use or habit.", 6], ["Catalyst", "An event, person, or thing that causes a major change.", 6], ["Adversity", "Difficulties or misfortune.", 6], ["Perplexity", "A state of being confused or unable to understand something.", 6], ["Unanimous", "Fully in agreement.", 6], ["Frigid", "Very cold in temperature.", 6], ["Acknowledge", "Accept or admit the existence or truth of.", 6], ["Acquaintance", "A person one knows slightly, but who is not a close friend.", 6], ["Adaptability", "The quality of being able to adjust to new conditions.", 6], ["Adhere", "Believe in and follow the practices of; stick fast to.", 6], ["Alleviate", "Make suffering, deficiency, or a problem less severe.", 6], ["Ambiguity", "The quality of being open to more than one interpretation; inexactness.", 6], ["Ample", "Enough or more than enough; plentiful.", 6], ["Animosity", "Strong hostility or friction.", 6], ["Apathy", "Lack of interest, enthusiasm, or concern.", 6], ["Arduous", "Involving or requiring strenuous effort; difficult and tiring.", 6], ["Astute", "Having or showing an ability to accurately assess situations or people and turn this to one's advantage.", 6], ["Audacious", "Showing a willingness to take surprisingly bold risks.", 6], ["Authentic", "Of undisputed origin and genuineness; reliable.", 6], ["Benevolent", "Well meaning and kindly.", 6], ["Boisterous", "Noisy, energetic, and cheerful; rowdy.", 6], ["Camouflage", "Disguise the presence of a person, animal, or object.", 6], ["Chronological", "Starting with the earliest and following the order in which they occurred.", 6], ["Coerce", "Persuade an unwilling person to do something by using force or threats.", 6], ["Cognizant", "Having knowledge or awareness.", 6], ["Collaborate", "Work jointly on an activity or project.", 6], ["Complacent", "Showing smug or uncritical satisfaction with oneself or one's achievements.", 6], ["Comprehensive", "Including or dealing with all or nearly all elements or aspects of something.", 6], ["Condone", "Accept and allow behavior that is considered wrong or offensive to continue.", 6], ["Conscientious", "Wishing to do what is right, especially to do one's work or duty well and thoroughly.", 6], ["Contemporary", "Living or occurring at the same time; modern.", 6], ["Contradict", "Deny the truth of a statement by asserting the opposite.", 6], ["Conundrum", "A confusing and difficult problem or question.", 6], ["Curtail", "Reduce in extent or quantity; impose a restriction on.", 6], ["Deficient", "Not having enough of a specified quality or ingredient.", 6], ["Deleterious", "Causing harm or damage.", 6], ["Demeanour", "Outward behavior or bearing.", 6], ["Denounce", "Publicly declare to be wrong or evil.", 6], ["Derelict", "In a very poor condition as a result of disuse and neglect.", 6], ["Despondent", "In low spirits from loss of hope or courage.", 6], ["Deteriorate", "Become progressively worse.", 6], ["Devoid", "Entirely lacking or free from.", 6], ["Discrepancy", "An illogical or surprising lack of compatibility or similarity between two or more facts.", 6], ["Disdain", "The feeling that someone or something is unworthy of one's consideration or respect.", 6], ["Disillusioned", "Disappointed in someone or something that one discovers to be less good than believed.", 6], ["Disparage", "Regard or represent as being of little worth.", 6], ["Disseminate", "Spread something, especially information, widely.", 6], ["Dormant", "Having normal physical functions suspended or slowed down for a period of time; inactive.", 6], ["Dubious", "Hesitating or doubting; not to be relied upon.", 6], ["Ebullient", "Cheerful and full of energy.", 6], ["Efficacy", "The ability to produce a desired or intended result.", 6], ["Elusive", "Difficult to find, catch, or achieve.", 6], ["Emanate", "Issue or spread out from a source.", 6], ["Embellish", "Make something more attractive by the addition of decorative details or features.", 6], ["Eminent", "Famous and respected within a particular sphere or profession.", 6], ["Empirical", "Based on, concerned with, or verifiable by observation or experience rather than theory or pure logic.", 6], ["Emulate", "Match or surpass a person or achievement, typically by imitation.", 6], ["Enthrall", "Capture the fascinated attention of.", 6], ["Ephemeral", "Lasting for a very short time.", 6], ["Epitome", "A person or thing that is a perfect example of a particular quality or type.", 6], ["Equivocal", "Open to more than one interpretation; ambiguous.", 6], ["Erratic", "Not even or regular in pattern or movement; unpredictable.", 6], ["Erroneous", "Wrong; incorrect.", 6], ["Exacerbate", "Make a problem, bad situation, or negative feeling worse.", 6], ["Exemplary", "Serving as a desirable model; very good.", 6], ["Exhilarated", "Make someone feel very happy, animated, or elated.", 6], ["Fabricate", "Invent or concoct something, typically with deceitful intent.", 6], ["Facetious", "Treating serious issues with deliberately inappropriate humor; flippant.", 6], ["Fastidious", "Very attentive to and concerned about accuracy and detail.", 6], ["Feasible", "Possible to do easily or conveniently.", 6], ["Ferocious", "Savagely fierce, cruel, or violent.", 6], ["Fickle", "Changing frequently, especially as regards one's loyalties or interests.", 6], ["Flabbergasted", "Greatly surprised; astonished.", 6], ["Formidable", "Inspiring fear or respect through being impressively large, powerful, intense, or capable.", 6], ["Fortitude", "Courage in pain or adversity.", 6], ["Futile", "Pointless or useless.", 6], ["Gargantuan", "Enormously large.", 6], ["Gregarious", "Fond of company; sociable.", 6], ["Haphazard", "Lacking any obvious principle of organization; random.", 6], ["Hypocrisy", "The practice of claiming to have higher standards or more noble beliefs than is the case.", 6], ["Idiosyncrasy", "A mode of behavior or way of thought peculiar to an individual.", 6], ["Imminent", "About to happen.", 6], ["Impeccable", "In accordance with the highest standards; faultless.", 6], ["Impoverished", "Made poor; reduced to poverty.", 6], ["Inadvertently", "Without intention; accidentally.", 6], ["Invaluable", "Extremely useful; indispensable.", 6], ["Meticulous", "Showing great attention to detail; very careful and precise.", 6], ["Monotonous", "Dull, tedious, and repetitious; lacking in variety and interest.", 6], ["Obsolete", "No longer produced or used; out of date.", 6], ["Ominous", "Giving the worrying impression that something bad is going to happen; threatening.", 6], ["Plausible", "Seeming reasonable or probable.", 6], ["Pragmatic", "Dealing with things sensibly and realistically in a way that is based on practical considerations.", 6], ["Resilient", "Able to withstand or recover quickly from difficult conditions.", 6], ["Scrutinise", "Examine or inspect closely and thoroughly.", 6], ["Superfluous", "Unnecessary, especially through being more than enough.", 6], ["Turbulent", "Characterized by conflict, disorder, or confusion; not stable or calm.", 6]].map(([w,d,l])=>({w:w.toLowerCase(),d,l}));
+const VP5=VOCAB.filter(v=>v.l===5),VP6=VOCAB.filter(v=>v.l===6),VSINGLE=VOCAB.filter(v=>!v.w.includes(' '));
+const LV=v=>'P'+v.l+' vocab',lc=s=>s.charAt(0).toLowerCase()+s.slice(1);
+const SETW=s=>new Set(s.split(/[\s,]+/).filter(Boolean));
+const VFORBID=Object.fromEntries(`rummage|search,look,through,drawer,mess
+ransack|search,steal,burglar,mess,damage
+dawned on|realise,suddenly,idea,understand,thought
+capacity|amount,maximum,hold,full,volume
+dire|serious,urgent,terrible,bad,emergency
+atrocious|cruel,terrible,awful,wicked,horrible
+contemplate|think,thought,consider,ponder,deeply
+conservation|protect,nature,save,preserve,environment
+deforestation|trees,woods,cut,logging,chopping
+biodiversity|variety,species,life,nature,ecosystem
+abundant|plenty,lots,many,large,plentiful
+accommodate|room,stay,space,hotel,lodging
+aggressive|attack,fight,violent,angry,hostile
+anticipate|expect,predict,wait,future,probable
+apprehensive|nervous,worried,anxious,scared,afraid
+astonished|surprised,amazed,shocked,wow,stunned
+bewildered|confused,puzzled,lost,baffled,puzzle
+blunder|mistake,error,careless,silly,wrong
+boast|brag,proud,show,achievements,pride
+calamity|disaster,damage,sudden,tragedy,catastrophe
+cautious|careful,danger,avoid,safe,watchful
+commend|praise,compliment,award,good,official
+commotion|noise,noisy,fuss,disturbance,chaos
+compel|force,make,oblige,must,order
+conceal|hide,cover,secret,sight,keep
+conclude|end,finish,finally,stop,complete
+confide|secret,trust,tell,private,friend
+congregate|gather,crowd,meet,group,together
+conspicuous|visible,noticeable,obvious,stand,clear
+cordially|warm,friendly,kind,welcome,nicely
+courteous|polite,manners,respectful,rude,kind
+deceive|trick,lie,fool,cheat,false
+decipher|decode,understand,code,read,puzzle
+defiant|disobey,resist,rebel,refuse,bold
+deliberate|intentional,purpose,planned,accident,conscious
+demolish|destroy,building,knock,break,wreck
+depict|show,draw,picture,paint,represent
+desolate|empty,deserted,lonely,bleak,abandoned
+detest|hate,dislike,loathe,intensely,strongly
+devastate|destroy,ruin,damage,completely,wreck
+diligent|hardworking,careful,work,effort,lazy
+diminutive|small,tiny,little,short,miniature
+discard|throw,away,rubbish,bin,useless
+disconsolate|sad,unhappy,comfort,gloomy,depressed
+disguise|costume,hide,mask,identity,appearance
+dismay|upset,worry,distress,shock,unexpected
+distinguish|difference,different,tell,recognise,separate
+drench|wet,soak,rain,water,soaked
+dwindle|shrink,smaller,gradually,less,decrease
+eccentric|strange,weird,odd,unusual,quirky
+elated|happy,joy,thrilled,delighted,excited
+eloquent|speak,fluent,speech,persuasive,words
+empathy|feelings,understand,share,care,feel
+encounter|meet,face,unexpected,experience,come
+endeavour|try,effort,attempt,hard,achieve
+enormous|big,huge,large,giant,size
+exaggerate|overstate,bigger,lie,stretch,worse
+exasperated|annoyed,irritated,frustrated,angry,fed
+exotic|foreign,faraway,unusual,strange,country
+extinguish|fire,put,out,flame,stop
+famished|hungry,starving,food,eat,empty
+fatigue|tired,tiredness,exhausted,sleepy,energy
+feat|achievement,deed,courage,skill,strength
+fervently|passionately,enthusiastically,strongly,eagerly,hope
+flee|run,escape,away,danger,fly
+flourish|grow,thrive,healthy,bloom,succeed
+forbid|ban,not,allow,prevent,rule
+fragile|break,broken,delicate,glass,easily
+frantic|panic,wild,frenzied,worried,rush
+frivolous|silly,pointless,serious,trivial,fun
+gaze|look,stare,eyes,watch,intently
+generous|give,kind,gift,donate,share
+glimpse|quick,look,see,glance,view
+gloom|dark,darkness,sad,dim,depression
+grave|serious,solemn,dead,tomb,alarm
+grievance|complaint,unfair,wrong,protest,complain
+gullible|fooled,believe,easily,naive,trick
+hazardous|dangerous,risky,harm,safe,warning
+hesitate|pause,wait,unsure,doubt,delay
+hinder|stop,block,prevent,obstruct,difficult
+identical|same,twins,alike,exactly,copy
+illuminate|light,bright,lamp,shine,visible
+imitate|copy,mimic,follow,mirror,model
+immense|huge,vast,large,big,great
+impartial|fair,just,equal,bias,neutral
+impulsive|sudden,rash,without,thinking,quickly
+incessant|endless,nonstop,continuous,never,pause
+indifferent|care,interest,unconcerned,bored,sympathy
+indignant|angry,unfair,annoyed,outraged,upset
+inevitable|certain,unavoidable,sure,happen,bound
+inquisitive|curious,ask,questions,nosy,interested
+insight|understanding,deep,idea,wisdom,realise
+insolent|rude,disrespectful,cheeky,arrogant,manners
+intend|plan,mean,purpose,aim,objective
+jeopardise|danger,risk,harm,threaten,put
+jubilant|joyful,celebrate,triumph,happy,delighted
+loathe|hate,dislike,disgust,detest,intense
+lucrative|profit,money,rich,earn,business
+melancholy|sad,sadness,gloomy,thoughtful,blue
+mimic|copy,imitate,parrot,act,mock
+accumulate|gather,collect,pile,grow,amount
+diminish|reduce,smaller,less,shrink,decrease
+lament|grief,sad,mourn,regret,cry
+vividly|clear,bright,detail,lively,picture
+accustomed|used,habit,familiar,usual,routine
+catalyst|change,cause,trigger,spark,chemical
+adversity|difficulty,hardship,misfortune,trouble,tough
+perplexity|confusion,puzzled,confused,understand,baffled
+unanimous|agree,everyone,vote,together,all
+frigid|cold,freezing,icy,chilly,temperature
+acknowledge|admit,accept,recognise,truth,nod
+acquaintance|know,friend,slightly,person,meet
+adaptability|adjust,change,flexible,new,conditions
+adhere|stick,follow,glue,rules,obey
+alleviate|ease,relieve,reduce,pain,problem
+ambiguity|unclear,meanings,vague,interpretation,doubt
+ample|enough,plenty,plentiful,lots,sufficient
+animosity|hostility,hatred,hate,enemy,anger
+apathy|care,interest,enthusiasm,bored,concern
+arduous|difficult,hard,tiring,effort,tough
+astute|clever,smart,sharp,shrewd,wise
+audacious|bold,daring,brave,risk,cheeky
+authentic|real,genuine,fake,original,true
+benevolent|kind,kindly,generous,caring,good
+boisterous|noisy,rowdy,loud,lively,energetic
+camouflage|hide,blend,chameleon,disguise,army
+chronological|order,time,sequence,earliest,timeline
+coerce|force,threaten,pressure,make,unwilling
+cognizant|aware,knowledge,know,awareness,conscious
+collaborate|work,together,team,project,cooperate
+complacent|satisfied,smug,comfortable,lazy,proud
+comprehensive|complete,thorough,all,full,everything
+condone|allow,accept,excuse,wrong,approve
+conscientious|careful,duty,thorough,responsible,hardworking
+contemporary|modern,current,today,present,same
+contradict|opposite,deny,disagree,argue,assert
+conundrum|puzzle,riddle,problem,confusing,difficult
+curtail|cut,reduce,limit,restrict,shorten
+deficient|lacking,not,enough,short,missing
+deleterious|harmful,harm,damage,bad,damaging
+demeanour|behaviour,manner,bearing,attitude,appearance
+denounce|condemn,criticise,wrong,publicly,evil
+derelict|abandoned,neglected,ruined,empty,building
+despondent|hopeless,sad,low,spirits,discouraged
+deteriorate|worse,decline,worsen,decay,progressively
+devoid|empty,without,lacking,free,entirely
+discrepancy|difference,mismatch,facts,lack,inconsistent
+disdain|contempt,scorn,unworthy,look,down
+disillusioned|disappointed,dream,belief,less,discover
+disparage|belittle,insult,criticise,worthless,put
+disseminate|spread,information,distribute,widely,share
+dormant|sleeping,inactive,asleep,volcano,hibernate
+dubious|doubt,doubtful,unsure,suspicious,reliable
+ebullient|cheerful,energy,bubbly,lively,enthusiastic
+efficacy|effective,result,work,power,intended
+elusive|hard,catch,slippery,escape,find
+emanate|come,spread,source,issue,flow
+embellish|decorate,add,detail,beautify,attractive
+eminent|famous,respected,distinguished,important,well-known
+empirical|observation,experience,evidence,experiment,theory
+emulate|copy,imitate,follow,match,surpass
+enthrall|fascinate,captivate,attention,charm,spellbind
+ephemeral|short,brief,temporary,lasting,fleeting
+epitome|perfect,example,model,ideal,typical
+equivocal|ambiguous,unclear,vague,interpretation,doubtful
+erratic|unpredictable,irregular,unsteady,random,pattern
+erroneous|wrong,incorrect,mistake,false,error
+exacerbate|worse,aggravate,problem,increase,intensify
+exemplary|model,excellent,perfect,good,ideal
+exhilarated|thrilled,excited,elated,happy,animated
+fabricate|invent,make,lie,fake,concoct
+facetious|joking,flippant,humour,funny,inappropriate
+fastidious|fussy,picky,careful,detail,particular
+feasible|possible,doable,easy,practical,achievable
+ferocious|fierce,savage,violent,wild,cruel
+fickle|change,changing,unreliable,loyal,mind
+flabbergasted|astonished,shocked,surprised,amazed,stunned
+formidable|powerful,impressive,fear,intimidating,strong
+fortitude|courage,strength,bravery,pain,endure
+futile|useless,pointless,vain,hopeless,waste
+gargantuan|huge,giant,enormous,massive,gigantic
+gregarious|sociable,friendly,company,outgoing,people
+haphazard|random,careless,disorganised,order,chance
+hypocrisy|pretend,fake,standards,preach,double
+idiosyncrasy|quirk,habit,peculiar,strange,individual
+imminent|about,soon,happen,coming,near
+impeccable|perfect,faultless,flawless,highest,spotless
+impoverished|poor,poverty,money,needy,broke
+inadvertently|accident,accidentally,unintentionally,without,mistake
+invaluable|useful,priceless,important,indispensable,worth
+meticulous|careful,detail,precise,thorough,exact
+monotonous|boring,dull,tedious,repetitive,same
+obsolete|old,outdated,used,modern,antique
+ominous|threatening,worrying,bad,sign,warning
+plausible|believable,reasonable,probable,seem,likely
+pragmatic|practical,sensible,realistic,theory,reasonable
+resilient|tough,recover,bounce,strong,withstand
+scrutinise|examine,inspect,closely,study,check
+superfluous|unnecessary,extra,more,needed,enough
+turbulent|rough,stormy,unstable,conflict,calm`.trim().split('\n').map(l=>{const[a,b]=l.split('|');return[a.trim().toLowerCase(),b.split(',').map(x=>x.trim())];}));
+const V_ADJ=SETW(`dire atrocious abundant aggressive apprehensive astonished bewildered cautious conspicuous courteous defiant deliberate desolate diligent diminutive disconsolate eccentric elated eloquent enormous exasperated exotic famished fragile frantic frivolous generous grave gullible hazardous identical immense impartial impulsive incessant indifferent indignant inevitable inquisitive insolent jubilant lucrative frigid accustomed unanimous ample arduous astute audacious authentic benevolent boisterous chronological complacent comprehensive contemporary deficient deleterious derelict despondent devoid disillusioned dormant dubious ebullient elusive eminent empirical ephemeral equivocal erratic erroneous exemplary exhilarated facetious fastidious feasible ferocious fickle flabbergasted formidable futile gargantuan gregarious haphazard imminent impeccable impoverished invaluable meticulous monotonous obsolete ominous plausible pragmatic resilient superfluous turbulent`),V_NOUN=SETW(`capacity deforestation biodiversity conservation calamity commotion blunder empathy feat fatigue gloom glimpse grievance insight melancholy adversity catalyst perplexity acquaintance adaptability ambiguity animosity apathy conundrum demeanour discrepancy disdain efficacy epitome fortitude hypocrisy idiosyncrasy`),V_DRAW=SETW(`rummage ransack deforestation drench extinguish demolish disguise gaze glimpse flee fragile enormous diminutive discard congregate illuminate famished hazardous camouflage frigid derelict gargantuan turbulent dormant obsolete ferocious collaborate boisterous desolate conceal dwindle`),V_ACT=SETW(`rummage ransack contemplate boast gaze flee hesitate drench discard extinguish imitate mimic exaggerate exasperated elated famished fatigue frantic apprehensive astonished bewildered indifferent indignant defiant courteous jubilant melancholy disconsolate dismay demolish congregate conceal disguise decipher boisterous gregarious apathy audacious ebullient enthrall exhilarated flabbergasted fastidious lament despondent complacent meticulous monotonous ferocious collaborate scrutinise formidable perplexity deceive cautious confide commend`);
+const SYN=["enormous immense gargantuan formidable", "astonished flabbergasted", "loathe detest", "imitate mimic emulate", "ambiguity equivocal", "bewildered perplexity", "elated jubilant exhilarated ebullient", "melancholy disconsolate despondent gloom lament", "exasperated indignant", "ample abundant", "dire grave", "hazardous deleterious", "atrocious ferocious", "conceal camouflage disguise", "rummage ransack", "demolish devastate", "diminutive diminish dwindle curtail", "hinder curtail", "deceive fabricate", "apathy indifferent", "defiant insolent", "generous benevolent", "disparage denounce", "diligent conscientious meticulous fastidious", "plausible feasible", "gaze glimpse", "dubious equivocal", "futile", "frantic erratic", "commotion boisterous turbulent"].map(s=>s.split(' '));
+const sameSyn=(a,b)=>SYN.some(g=>g.includes(a)&&g.includes(b));
+VOCAB.forEach(v=>{
+  TABOO.push({c:LV(v),w:v.w.toUpperCase(),f:VFORBID[v.w]||[]});
+  BALD.push({c:LV(v),w:v.w,d:v.d});
+  TWENTYQ.push({c:LV(v),w:v.w,d:v.d});
+  WHO.push({c:LV(v),w:v.w,d:v.d});
+});
+for(let i=0;i<40;i++)TTL.push({c:'Vocabulary',gen:true});
+PICT.push(...VOCAB.filter(v=>V_DRAW.has(v.w)).map(v=>({c:'Vocabulary',w:v.w,d:v.d})));
+CHAR.push(...VOCAB.filter(v=>V_ACT.has(v.w)).map(v=>({c:'Vocabulary',w:v.w,d:v.d})));
+HM['P5 vocabulary']=VP5.map(v=>[v.w,v.d]);HM['P6 vocabulary']=VP6.map(v=>[v.w,v.d]);
+SC_CATS.push('Things that are fragile','Things that are enormous','Things that are hazardous','Things that are frigid','Things that are boisterous','Things you can demolish','Things you can conceal','Things you can extinguish','Things you can illuminate','Things you might discard','Things you might rummage through','Things that are obsolete','Things that are diminutive','Things that are abundant in Singapore','Ferocious animals','Words meaning “happy” (e.g. elated)','Words meaning “sad” (e.g. melancholy)','Words meaning “angry”','Things people boast about','Things that are conspicuous');
+function vocabTruths(){
+  const ws=shuffle(VOCAB),[a,b,c]=ws;
+  const d=ws.slice(3).find(x=>x.l===c.l&&x.d!==c.d&&!sameSyn(x.w,c.w));
+  const f=(w,df)=>'“'+w+'” means: '+lc(df);
+  return[[f(a.w,a.d),1],[f(b.w,b.d),1],[f(c.w,d.d),0]];
+}
+
+/* ---------- tools ---------- */
+const TOOLS={};
+TOOLS.taboo=(m,s)=>cardTool(m,s,{items:TABOO,cats:['General','P5 vocab','P6 vocab'],timer:[60],score:{n:2,label:'Team'},render:c=>h('div',{},h('div',{class:'big'},c.w),h('div',{class:'forbid'},c.f.map(x=>h('span',{class:'tag bad'},'🚫 '+x)))),bank:{title:'All Taboo cards',fmt:c=>`<b>${c.w}</b> — not: ${c.f.join(', ')}`}});
+TOOLS.balderdash=(m,s)=>{cardTool(m,s,{items:BALD,cats:['Classic obscure','P5 vocab','P6 vocab'],hidden:true,partial:true,btn:'New word ▶',revealLabel:'👁 Reveal real definition',render:(c,sh)=>h('div',{},h('div',{class:'catlabel'},'The word is'),h('div',{class:'big'},c.w),sh?h('div',{class:'ans'},'Real: '+c.d):h('div',{class:'ph'},'Definition hidden — players write fakes first')),bank:{title:'All words and real definitions',fmt:c=>`<b>${c.w}</b> — ${c.d}`}});s.append(Scoreboard({n:4,label:'Player'}).root,h('div',{class:'panel'},h('h4',{},'Scoring reminder'),'+1 for guessing the real definition',h('br'),'+1 for each vote your fake receives'));};
+TOOLS.scatter=(m,s)=>{
+  const L='ABCDEFGHIJKLMNOPRSTW'.split('');let cats=[];const letter=h('div',{class:'big',style:'font-size:6rem'},'?'),grid=h('div',{class:'cards',style:'display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:.5rem'});
+  const timer=Timer([120,180]);
+  const roll=()=>{letter.textContent=pick(L);};
+  const newCats=()=>{cats=shuffle(SC_CATS).slice(0,12);grid.replaceChildren(...cats.map((c,i)=>h('div',{class:'panel',style:'margin:0;font-size:1.15rem'},(i+1)+'. '+c)));};
+  m.append(h('div',{class:'bigcard'},h('div',{class:'catlabel'},'Letter'),letter),h('div',{class:'btnrow'},h('button',{class:'btn',onclick:()=>{roll();newCats();timer.reset();timer.start();}},'▶ New round (letter + 12 categories + timer)'),h('button',{class:'btn alt',onclick:roll},'🎲 Re-roll letter'),h('button',{class:'btn alt',onclick:newCats},'↻ New categories')),grid);
+  bank(m,'All categories',SC_CATS);s.append(timer.root,Scoreboard({n:4,label:'Player'}).root,h('div',{class:'panel'},h('h4',{},'Scoring'),'1 point per unique answer.',h('br'),'0 points if anyone else wrote the same.'));
+};
+TOOLS.twenty=(m,s)=>{m.append(h('div',{class:'panel'},h('h4',{},'Strategy for questioners'),'Start broad, then narrow: “Is it alive?” → “Is it bigger than a car?” → “Can you eat it?” → “Is it found in Singapore?” Avoid guessing before you have at least 5–6 facts. For vocabulary words try “Is it a verb?”, “Is it a feeling?”, “Is it positive?”'));cardTool(m,s,{items:TWENTYQ,hidden:true,cats:['Person','Place','Thing','P5 vocab','P6 vocab'],btn:'Pick a secret ▶',revealLabel:'👁 Thinker peeks / hide',render:c=>h('div',{},h('div',{class:'catlabel'},c.c),h('div',{class:'big'},c.w),c.d&&h('div',{class:'muted'},'Meaning: '+c.d)),counter:{title:'❓ Questions',max:20,down:true,btn:'Question asked',endMsg:'No questions left — the thinker wins!'},bank:{title:'All secret ideas',fmt:c=>`${c.c}: ${c.w}`}});};
+TOOLS.ouat=(m,s)=>{const bon={items:VOCAB.map(v=>({t:v.w,d:v.d,cls:'vcb'})),per:2};m.append(chipRow([[2,'With vocabulary cards'],[0,'Classic cards only']],2,v=>{bon.per=+v;}));dealer(m,{bonus:bon,minP:2,maxP:5,perFn:n=>Math.min(8,Math.floor(40/n)),pool:[...OUAT_CHR.map(t=>({t,cls:'chr'})),...OUAT_ITM.map(t=>({t,cls:'itm'})),...OUAT_PLC.map(t=>({t,cls:'plc'})),...OUAT_EVT.map(t=>({t,cls:'evt'}))],extra:OUAT_END.map(t=>({t,cls:'end'}))});m.append(h('div',{class:'muted'},'Colours: 🔵 characters · 🟡 items · 🟢 places · 🌸 events · 🟣 vocabulary (use it correctly in your story to play it) · ⬛ ending card'));bank(m,'Ending cards',OUAT_END);s.append(Timer([60,120],{title:'⏱ Optional turn timer'}).root);};
+TOOLS.jam=(m,s)=>{const r=cardTool(m,s,{items:JAM.map(w=>({c:'Topic',w})).concat(VOCAB.map(v=>({c:'Vocab challenge',w:v.w,d:v.d}))),cats:['Topic','Vocab challenge'],btn:'New topic ▶',timer:[60],score:{n:4,label:'Player'},render:c=>c.d?h('div',{},h('div',{class:'catlabel'},'Vocab challenge: speak on anything, but use this word correctly'),h('div',{class:'big'},c.w),h('div',{class:'muted'},c.d)):h('div',{},h('div',{class:'catlabel'},'Topic'),h('div',{class:'big'},c.w)),bank:{title:'All topics and vocab challenges',fmt:c=>c.d?`<b>${c.w}</b> — ${c.d}`:c.w}});s.append(h('div',{class:'panel'},h('h4',{},'⛔ Challenges (pauses the clock)'),h('div',{class:'btnrow'},['Hesitation','Repetition','Deviation'].map(x=>h('button',{class:'btn alt',onclick:()=>r.timer.pause()},x)))));};
+TOOLS.fortunately=(m,s)=>{
+  let turn=0,starter='',vOn=false,vcur=null;const sd=makeDeck(FU),vd=makeDeck(VOCAB),vbox=h('div',{class:'mid',style:'color:#6150d6;text-align:center'});const st=h('div',{class:'mid'}),word=h('div',{class:'fu'}),prog=h('div',{class:'cmsg'});
+  const paint=()=>{vbox.textContent=(vOn&&vcur&&turn>0&&turn<=10)?'🔤 Include the word “'+vcur.w+'” — '+vcur.d:'';st.textContent=starter?'Starter: '+starter:'Press “New story”';if(!starter){word.textContent='';prog.textContent='';return;}if(turn===0){word.textContent='…';word.className='fu';prog.textContent='Class tells the starter, then press Next turn';}else if(turn>10){word.textContent='🎉 The End!';word.className='fu';prog.textContent='Press New story to play again';}else{const f=turn%2===1;word.textContent=f?'Fortunately…':'Unfortunately…';word.className='fu '+(f?'f':'u');prog.textContent='Turn '+turn+' of 10';}};
+  m.append(h('div',{class:'bigcard'},st,word,vbox,prog),h('div',{class:'btnrow'},h('button',{class:'btn',onclick:()=>{starter=sd.next();turn=0;paint();}},'📖 New story'),h('button',{class:'btn alt',onclick:()=>{if(starter&&turn<=10){turn++;vcur=vOn?vd.next():null;paint();}}},'Next turn ▶'),h('button',{class:'btn ghost',onclick:e=>{vOn=!vOn;e.currentTarget.textContent=vOn?'🔤 Vocab challenge: ON':'🔤 Vocab challenge: OFF';vcur=(vOn&&turn>0&&turn<=10)?vd.next():null;paint();}},'🔤 Vocab challenge: OFF')));paint();bank(m,'All story starters',FU);
+  s.append(h('div',{class:'panel'},h('h4',{},'Tips'),'No scoring — focus on creativity. Encourage full sentences and linking words (“Fortunately”, “However”, “As a result”).'));
+};
+TOOLS.truths=(m,s)=>cardTool(m,s,{items:TTL,cats:['Singapore','Science','English','Vocabulary'],bankItems:TTL.filter(x=>!x.gen),hidden:true,partial:true,btn:'New set ▶',revealLabel:'👁 Reveal the lie',score:{n:2,label:'Team'},prep:c=>({c:c.c,st:shuffle(c.gen?vocabTruths():c.st)}),render:(c,sh)=>h('div',{style:'text-align:left;width:100%'},h('div',{class:'catlabel'},c.c),...c.st.map(([t,ok],i)=>h('div',{class:'mid',style:'margin:.5rem 0;'+(sh?(ok?'color:var(--good)':'color:var(--bad)'):'')},(sh?(ok?'✅ ':'❌ '):(i+1)+'. ')+t))),bank:{title:'All statement sets (lie in red)',fmt:c=>`<b>${c.c}</b>: `+c.st.map(([t,ok])=>ok?t:`<span style="color:#d64545">${t}</span>`).join(' · ')}});
+TOOLS.whoami=(m,s)=>cardTool(m,s,{items:WHO,hidden:true,cats:['Historical figure','Book character','P5 vocab','P6 vocab'],btn:'New sticky note ▶',revealLabel:'👁 Peek (not the guesser!)',render:c=>h('div',{},h('div',{class:'catlabel'},c.c),h('div',{class:'big'},c.w),c.d&&h('div',{class:'muted'},c.d)),counter:{title:'❓ Questions asked',maxes:[10,15],btn:'Question asked',endMsg:'Out of questions!'},timer:[120,180],bank:{title:'All sticky-note ideas',fmt:c=>`${c.c}: ${c.w}`}});
+TOOLS.boggle=(m,s)=>{
+  const grid=h('div',{class:'bgrid blur'},range(1,16).map(()=>h('div',{class:'tile'},'?')));const msg=h('div',{class:'cmsg'},'Letters stay hidden until the timer starts.');
+  const timer=Timer([120,180,240],{onEnd:()=>{msg.textContent='⏰ Time’s up! Pencils down — compare lists and cross off duplicates.';}});
+  const shake=()=>{grid.replaceChildren(...shuffle(BOGGLE).map(d=>{const f=d[Math.floor(Math.random()*6)];return h('div',{class:'tile'},f==='Q'?'Qu':f);}));};
+  m.append(grid,msg,h('div',{class:'btnrow',style:'justify-content:center'},h('button',{class:'btn',onclick:()=>{shake();grid.classList.remove('blur');msg.textContent='Go! Join touching tiles (3+ letters).';timer.reset();timer.start();}},'🎲 Shake & start'),h('button',{class:'btn alt',onclick:()=>grid.classList.toggle('blur')},'👁 Hide / show letters')));
+  const inp=h('input',{class:'txt',placeholder:'Type a word to check points',oninput:()=>{const n=inp.value.trim().replace(/[^a-z]/gi,'').length;out.textContent=n?(n<3?'Too short (3+ letters)':n+' letters = '+(n<=4?1:n==5?2:n==6?3:n==7?5:11)+' pt'):'';}}),out=h('span',{class:'mid'});
+  m.append(h('div',{class:'panel'},h('h4',{},'Points checker'),h('div',{class:'btnrow'},inp,out)),h('div',{class:'panel'},h('h4',{},'Scoring (classic scale)'),h('table',{class:'t'},h('tr',{},['Letters','3–4','5','6','7','8+'].map(x=>h('th',{},x))),h('tr',{},['Points',1,2,3,5,11].map(x=>h('td',{},String(x)))))));
+  s.append(timer.root,Scoreboard({n:4,label:'Player'}).root);
+};
+TOOLS.contact=(m,s)=>{
+  const pools={'Everyday words':CONTACT.map(w=>({w})),'P5 vocab':VSINGLE.filter(v=>v.l===5).map(v=>({w:v.w,d:v.d})),'P6 vocab':VSINGLE.filter(v=>v.l===6).map(v=>({w:v.w,d:v.d}))};
+  let pool='Everyday words',dk=makeDeck(pools[pool]),cur=null,n=1,peek=false;
+  const disp=h('div',{class:'big',style:'letter-spacing:.3em'}),sub=h('div',{class:'cmsg'}),cd=h('div',{class:'fu'});
+  const paint=()=>{if(!cur){disp.textContent='?';sub.textContent='Press “New word”';return;}disp.textContent=[...cur.w.toUpperCase()].map((c,i)=>i<n?c:'_').join(' ');sub.textContent=peek?'Leader’s word: '+cur.w+(cur.d?' — '+cur.d:''):'Leader: press 👁 to check your word (hidden by default)';};
+  const run=()=>{let t=3;cd.textContent=t;const iv=setInterval(()=>{t--;cd.textContent=t>0?t:'CONTACT! 🗣️';if(t<=0)clearInterval(iv);},1000);onLeave(()=>clearInterval(iv));};
+  m.append(chipRow(Object.keys(pools).map(k=>[k,k]),pool,k=>{pool=k;dk=makeDeck(pools[k]);cur=null;cd.textContent='';paint();}),h('div',{class:'bigcard'},h('div',{class:'catlabel'},'Leader’s word starts with…'),disp,sub,cd),h('div',{class:'btnrow'},h('button',{class:'btn',onclick:()=>{cur=dk.next();n=1;peek=false;cd.textContent='';paint();}},'New word'),h('button',{class:'btn alt',onclick:()=>{if(cur&&n<cur.w.length){n++;paint();}}},'Reveal next letter'),h('button',{class:'btn alt',onclick:()=>{peek=!peek;paint();}},'👁 Leader peeks'),h('button',{class:'btn ghost',onclick:run},'3-2-1 Contact!')));paint();
+  bank(m,'All leader words',Object.values(pools).flat().map(x=>'<b>'+x.w+'</b>'+(x.d?' — '+x.d:'')));
+  s.append(Scoreboard({n:2,label:'Team'}).root);
+};
+TOOLS.chain=(m,s)=>{
+  let chain=[],out=false,starters=ASSOC;const box=h('div',{class:'chain'}),msg=h('div',{class:'mid'});
+  const timer=Timer([3,5],{title:'⏱ Hesitation limit',onEnd:()=>{out=true;msg.textContent='⏰ OUT! Too slow.';msg.style.color='var(--bad)';}});
+  const inp=h('input',{class:'txt',placeholder:'Type the next word, press Enter',onkeydown:e=>{if(e.key==='Enter')add();}});
+  const paint=()=>box.replaceChildren(...chain.map(w=>h('span',{},w)));
+  function add(){const w=inp.value.trim().toLowerCase();if(!w||!chain.length||out)return;if(chain.includes(w)){msg.textContent='🚫 “'+w+'” was already said!';msg.style.color='var(--bad)';return;}chain.push(w);inp.value='';msg.textContent='';paint();timer.reset();timer.start();}
+  m.append(chipRow([['e','Everyday starters'],['p5','P5 vocab starters'],['p6','P6 vocab starters']],'e',k=>{starters=k==='e'?ASSOC:VSINGLE.filter(v=>v.l===(k==='p5'?5:6)).map(v=>v.w);}),h('div',{class:'btnrow'},h('button',{class:'btn',onclick:()=>{chain=[pick(starters)];out=false;msg.textContent='';paint();timer.reset();timer.start();}},'▶ New chain'),h('button',{class:'btn alt',onclick:()=>{chain.pop();paint();}},'Undo last')),box,h('div',{class:'btnrow'},inp,h('button',{class:'btn',onclick:add},'Add')),msg,h('div',{class:'muted'},'Teacher types each word. Timer restarts for the next player; repeated words are rejected.'));
+  s.append(timer.root);
+};
+const GAL=w=>{const P=['<line x1="150" y1="30" x2="150" y2="62"/>','<circle cx="150" cy="78" r="16"/>','<line x1="150" y1="94" x2="150" y2="150"/>','<line x1="150" y1="105" x2="125" y2="130"/>','<line x1="150" y1="105" x2="175" y2="130"/>','<line x1="150" y1="150" x2="130" y2="185"/>','<line x1="150" y1="150" x2="170" y2="185"/>'];return`<svg viewBox="0 0 220 220" class="gal"><g><line x1="30" y1="205" x2="190" y2="205"/><line x1="70" y1="205" x2="70" y2="30"/><line x1="70" y1="30" x2="150" y2="30"/><line x1="70" y1="55" x2="95" y2="30"/></g><g class="pt">${P.slice(0,w).join('')}</g></svg>`;};
+TOOLS.hangman=(m,s)=>{
+  const cats=Object.keys(HM);let cat=cats[0],ent,guessed,wrong,over,team=0,teamMode=false,hint=false;const deck={};cats.forEach(c=>deck[c]=makeDeck(HM[c]));const area=h('div',{style:'text-align:center'});
+  const isL=c=>/[A-Za-z]/.test(c);
+  const hintLabel=()=>cat==='Book titles'?'Author':'Meaning';
+  function newGame(){const e=deck[cat].next();ent={w:e[0],h:e[1]};guessed=new Set();wrong=0;over=null;team=0;hint=false;draw();}
+  function guess(L){if(over||guessed.has(L))return;guessed.add(L);if(!ent.w.toUpperCase().includes(L))wrong++;if([...ent.w.toUpperCase()].every(c=>!isL(c)||guessed.has(c)))over='win';else if(wrong>=7)over='lose';if(teamMode&&!over)team=1-team;draw();}
+  function draw(){
+    const W=ent.w.toUpperCase();
+    const words=W.split(' ').map(wd=>h('span',{class:'hw'},[...wd].map(c=>h('span',{class:'hl'+(isL(c)?'':' punct')+(over==='lose'&&isL(c)&&!guessed.has(c)?' miss':'')},isL(c)?((guessed.has(c)||over==='lose')?c:'\u00a0'):c))));
+    const kb=h('div',{class:'kb'},['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'].map(r=>h('div',{},[...r].map(L=>h('button',{class:guessed.has(L)?(W.includes(L)?'ok':'no'):'',disabled:guessed.has(L)||!!over,onclick:()=>guess(L)},L)))));
+    const showHint=hint||wrong>=3;
+    area.replaceChildren(h('div',{html:GAL(wrong)}),h('div',{},words),showHint?h('div',{class:'ans',style:'color:var(--ink)'},'💡 '+hintLabel()+': '+ent.h):h('div',{class:'muted'},'Hint appears after 3 wrong guesses'),over?h('div',{class:'big',style:'color:'+(over==='win'?'var(--good)':'var(--bad)')},over==='win'?'🎉 Solved!':'💀 It was: '+ent.w):(teamMode?h('div',{class:'mid'},'Team '+(team?'B':'A')+'’s turn'):h('div',{class:'cmsg'},'Wrong guesses: '+wrong+' / 7')),kb,h('div',{class:'btnrow',style:'justify-content:center'},h('button',{class:'btn',onclick:newGame},'New word'),h('button',{class:'btn alt',onclick:()=>{hint=true;draw();}},'💡 Hint'),h('button',{class:'btn ghost',onclick:()=>{teamMode=!teamMode;draw();}},teamMode?'Team mode: ON':'Team mode: OFF')));
+  }
+  const kd=e=>{if(e.ctrlKey||e.metaKey||e.altKey)return;if(/^[a-zA-Z]$/.test(e.key)&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))guess(e.key.toUpperCase());};
+  document.addEventListener('keydown',kd);onLeave(()=>document.removeEventListener('keydown',kd));
+  m.append(chipRow(cats.map(c=>[c,c]),cat,c=>{cat=c;newGame();}),area);newGame();
+  cats.forEach(c=>bank(m,'All '+c,HM[c].map(e=>`<b>${e[0]}</b> — ${e[1]}`)));
+  s.append(Scoreboard({n:2,label:'Team'}).root,h('div',{class:'panel'},h('h4',{},'Tips'),'Type on the keyboard or tap letters. Turn on Team mode to alternate teams on every guess.'));
+};
+TOOLS.pictionary=(m,s)=>cardTool(m,s,{items:PICT,hidden:true,cats:['Objects','Actions','Difficult','Vocabulary'],btn:'New word ▶',revealLabel:'👁 Drawer peeks / hide',timer:[60],score:{n:2,label:'Team'},render:c=>h('div',{},h('div',{class:'catlabel'},c.c),h('div',{class:'big'},c.w),c.d&&h('div',{class:'muted'},c.d)),bank:{title:'All words',fmt:c=>`${c.c}: ${c.w}`}});
+TOOLS.charades=(m,s)=>{cardTool(m,s,{items:CHAR,hidden:true,cats:['Books','Phrases','Movies','Actions','Vocabulary'],btn:'New card ▶',revealLabel:'👁 Actor peeks / hide',timer:[120,180],score:{n:2,label:'Team'},render:c=>h('div',{},h('div',{class:'catlabel'},c.c),h('div',{class:'big'},c.w),c.d&&h('div',{class:'muted'},c.d)),bank:{title:'All cards',fmt:c=>`${c.c}: ${c.w}`}});m.append(h('div',{class:'panel'},h('h4',{},'Standard signals'),h('table',{class:'t'},[['Book','hands together like opening a book'],['Movie','crank an old camera'],['Number of words','hold up fingers'],['Syllables','lay fingers on arm'],['“Sounds like”','pull on ear']].map(([a,b])=>h('tr',{},h('td',{},h('b',{},a)),h('td',{},b))))));};
+TOOLS.cubes=(m,s)=>{
+  let n=6,faces=[],mode='Solo',vw_=null;const dice=h('div',{class:'dice'}),modeBox=h('div',{class:'panel'});
+  const MODES={Solo:'Create the best story you can using ALL the images.','Competitive':'Everyone tells a story; the judge votes for the best.','Collaborative':'Each person adds one sentence using one cube.','Timed':'3-minute storytelling challenge — start the timer!'};
+  const draw=()=>{dice.replaceChildren(...faces.map((f,i)=>h('button',{class:'die',title:'Tap to re-roll this die',onclick:()=>{faces[i]=pick(ICONS);draw();}},f)));modeBox.replaceChildren(h('h4',{},'Mode: '+mode),MODES[mode],vw_?h('div',{class:'mid',style:'color:#d62f64;margin-top:.5rem'},'🔤 Also use the word “'+vw_.w+'” — '+vw_.d):null);};
+  const roll=()=>{faces=shuffle(ICONS).slice(0,n);draw();};
+  m.append(chipRow([6,7,8,9].map(x=>[x,x+' dice']),6,x=>{n=+x;roll();}),chipRow(Object.keys(MODES).map(k=>[k,k]),mode,k=>{mode=k;draw();}),dice,h('div',{class:'btnrow',style:'justify-content:center'},h('button',{class:'btn',onclick:roll},'🎲 Roll all dice'),h('button',{class:'btn alt',onclick:()=>{vw_=pick(VOCAB);draw();}},'🔤 Add a vocab word'),h('button',{class:'btn ghost',onclick:()=>{vw_=null;draw();}},'✖ No vocab word')),modeBox);roll();
+  s.append(Timer([180,120,60]).root,h('div',{class:'panel'},h('h4',{},'DIY dice'),'Draw simple icons on paper dice templates — or project this page and tap any die to re-roll it.'));
+};
+TOOLS.codenames=(m,s)=>{
+  let size=5,cards=[],spy=false,over='',first='',wp='Everyday';const wordPool=()=>wp==='Everyday'?CN:wp==='Vocabulary'?VSINGLE.map(v=>v.w):CN.concat(VSINGLE.map(v=>v.w));const board=h('div',{class:'cn'}),info=h('div',{class:'mid',style:'text-align:center;margin:.6rem 0'});
+  function newGame(){const n=size*size,words=shuffle(wordPool()).slice(0,n);first=Math.random()<.5?'red':'blue';const second=first==='red'?'blue':'red';const sp=size===5?{f:9,o:8,n:7}:{f:4,o:3,n:1};const keys=shuffle([...Array(sp.f).fill(first),...Array(sp.o).fill(second),...Array(sp.n).fill('neutral'),'assassin']);cards=words.map((w,i)=>({w,k:keys[i],up:false}));over='';draw();}
+  function draw(){board.style.gridTemplateColumns=`repeat(${size},1fr)`;const left=c=>cards.filter(x=>x.k===c&&!x.up).length;
+    if(!over){if(left('red')===0)over='🔴 Red team wins!';else if(left('blue')===0)over='🔵 Blue team wins!';}
+    board.replaceChildren(...cards.map(c=>h('button',{class:'cn-c '+c.k+(c.up?' up':'')+(spy&&!c.up?' key':''),onclick:()=>{if(c.up||over)return;c.up=true;if(c.k==='assassin')over='💀 Assassin! That team loses.';draw();}},c.w)));
+    info.textContent=over||((first==='red'?'🔴 Red':'🔵 Blue')+' goes first · Red left: '+left('red')+' · Blue left: '+left('blue'));}
+  m.append(chipRow([[5,'5×5 standard'],[3,'3×3 simplified (P5/6)']],5,x=>{size=+x;newGame();}),chipRow([['Everyday','Everyday words'],['Vocabulary','Vocabulary words'],['Mixed','Mixed']],'Everyday',k=>{wp=k;newGame();}),info,board,h('div',{class:'btnrow'},h('button',{class:'btn',onclick:newGame},'New board'),h('button',{class:'btn alt',onclick:()=>{spy=!spy;draw();}},'🕵️ Spymaster key on / off')));newGame();
+  s.append(h('div',{class:'panel'},h('h4',{},'How to run it'),'Turn the key ON only for the two spymasters (or show it on a separate screen). Tap a card when a team touches it to reveal its colour.'),h('div',{class:'panel'},h('h4',{},'Clue rules'),'ONE word + a number. Clue cannot be a word on the board.'));
+};
+TOOLS.apples=(m,s)=>{
+  let mode='Classic';
+  const greens=()=>mode==='Classic'?GREEN.map(w=>({w})):VOCAB.filter(v=>V_ADJ.has(v.w)).map(v=>({w:v.w,d:v.d}));
+  let gd=makeDeck(greens());
+  const gcard=h('div',{class:'bigcard empty'},'Press “Flip green card” to begin');
+  m.append(chipRow([['Classic','Classic cards'],['Vocabulary','Vocabulary adjectives']],'Classic',k=>{mode=k;gd=makeDeck(greens());gcard.className='bigcard empty';gcard.textContent='Press “Flip green card” to begin';}),gcard,h('div',{class:'btnrow'},h('button',{class:'btn',onclick:()=>{const c=gd.next();gcard.className='bigcard';gcard.replaceChildren(h('div',{style:'background:#d9f4e2;padding:1.5rem 3rem;border-radius:1rem'},h('div',{class:'catlabel'},'Green card'),h('div',{class:'big'},c.w),c.d&&h('div',{class:'muted'},c.d)));}},'Flip green card ▶')));
+  dealer(m,{minP:4,maxP:8,per:5,pool:()=>RED.map(t=>({t,cls:'red'})).concat(mode==='Classic'?[]:VOCAB.filter(v=>V_NOUN.has(v.w)).map(v=>({t:v.w,d:v.d,cls:'red'})))});
+  bank(m,'Classic green cards',GREEN);bank(m,'Vocabulary green cards (adjectives)',VOCAB.filter(v=>V_ADJ.has(v.w)).map(v=>'<b>'+v.w+'</b> — '+v.d));bank(m,'Red cards',RED.concat(VOCAB.filter(v=>V_NOUN.has(v.w)).map(v=>v.w+' (vocab)')));
+  s.append(h('div',{class:'panel'},h('h4',{},'Round'),'1. Flip green · 2. Players pick a red card · 3. Judge shuffles & reads · 4. Judge picks · 5. Rotate judge. First to 4 green cards wins.',h('br'),h('br'),'Vocabulary mode: red cards add abstract vocab nouns, so the judge may ask “why?”'),Scoreboard({n:4,label:'Player'}).root);
+};
+TOOLS.relay=(m,s)=>{
+  let words=[],team=0,mode='free',live=false;const sd=makeDeck(RELAY),pd=makeDeck(RELAY_CH),vd=makeDeck(VOCAB),np_=()=>{if(mode==='vocab'){const v=vd.next();return 'include “'+v.w+'” — '+lc(v.d);}return pd.next();};const sent=h('div',{class:'sent'}),turn=h('div',{class:'mid'}),msg=h('div',{class:'mid',style:'color:var(--bad)'});
+  const timer=Timer([10,15,20],{onEnd:()=>{if(live){live=false;msg.textContent='⏰ Time! Team '+(team?'B':'A')+' loses the round.';}}});
+  const inp=h('input',{class:'txt',placeholder:'Type the word/phrase to add, press Enter',onkeydown:e=>{if(e.key==='Enter')add();}});
+  const paint=()=>{sent.textContent=words.join(' ');turn.textContent=live?('Team '+(team?'B':'A')+(mode!=='free'?' — '+prompt_:'')):'';};
+  let prompt_='';
+  function add(){const v=inp.value.trim();if(!v||!live)return;words.push(v);inp.value='';team=1-team;prompt_=np_();msg.textContent='';paint();timer.reset();timer.start();}
+  m.append(chipRow([['free','Free play'],['challenge','Challenge (parts of speech)'],['vocab','Vocabulary challenge']],'free',k=>{mode=k;paint();}),h('div',{class:'bigcard'},sent,turn,msg),h('div',{class:'btnrow'},inp,h('button',{class:'btn',onclick:add},'Add')),h('div',{class:'btnrow'},h('button',{class:'btn',onclick:()=>{words=sd.next().split(' ');team=0;live=true;msg.textContent='';prompt_=np_();paint();timer.reset();timer.start();}},'▶ New round'),h('button',{class:'btn alt',onclick:()=>{if(words.length>1){words.pop();team=1-team;paint();}}},'Undo'),h('button',{class:'btn ghost',onclick:()=>{live=false;timer.pause();msg.textContent='Round stopped.';}},'Stop')),h('div',{class:'muted'},'Sentence must stay grammatically correct. Teacher judges; award the round on the scoreboard.'));
+  bank(m,'Sentence starters',RELAY);bank(m,'Challenge prompts',RELAY_CH);s.append(timer.root,Scoreboard({n:2,label:'Team'}).root);
+};
+TOOLS.singlish=(m,s)=>{
+  let mode='sing';const refs={};
+  m.append(chipRow([['sing','Singlish → Standard English'],['std','Standard → Singlish']],'sing',k=>{mode=k;refs.paint&&refs.paint();}));
+  Object.assign(refs,cardTool(m,s,{items:SINGL,hidden:true,partial:true,btn:'Next phrase ▶',revealLabel:'✅ Reveal answer',score:{n:2,label:'Team'},render:(c,sh)=>{const q=mode==='sing'?c.s:c.e,a=mode==='sing'?c.e:c.s;return h('div',{},h('div',{class:'big',style:'font-size:clamp(1.6rem,5vw,2.8rem)'},'“'+q+'”'),sh?h('div',{class:'ans'},'✅ '+a):h('div',{class:'ph'},'Teams write their answer…'));},bank:{title:'All phrases',fmt:c=>`“${c.s}” → “${c.e}”`}}));
+  bank(m,'Singlish glossary',GLOSS.map(([a,b])=>`<b>${a}</b> — ${b}`));
+  s.append(h('div',{class:'panel'},h('h4',{},'Discuss'),'When is each register appropriate? Standard English for the PSLE oral exam, writing, and formal talks; Singlish among friends and family.'));
+};
+
+/* ---------- games ---------- */
+const G=(n,name,cat,players,tag,steps,notes,tool)=>({n,name,cat,players,tag,steps,notes,tool});
+const GAMES=[
+G(1,'Taboo','word','2+ teams (3–4 players each)','Describe the word without the forbidden ones.',['One player draws a card with a target word.','They must describe it <b>without</b> using the 5 forbidden words on the card.','The team has <b>60 seconds</b> to guess as many words as possible.','If a forbidden word is used, skip the card (no points).','Most words guessed wins.'],[['Example','Describe “TEACHER” without saying: school, student, educate, classroom, lesson']],'taboo'),
+G(2,'Balderdash','word','4–8 players','Invent fake definitions and fool your friends.',['One player (the dasher) reads an obscure word.','Everyone else writes a fake definition on paper.','The dasher collects all definitions plus the real one and reads them aloud.','Players vote on which is real.','<b>Scoring:</b> 1 point for guessing correctly; 1 point for each vote your fake receives.','Rotate the dasher each round.'],[],'balderdash'),
+G(3,'Scattergories','word','2–6 players','Race to list words by category — unique answers only.',['Roll the letter die (or randomly select a letter).','Set a timer for 2–3 minutes.','List words for 12 categories that start with that letter.','Example categories: Countries, Animals, Foods, Verbs, Authors.','<b>Scoring:</b> 1 point per unique answer; 0 if others wrote the same.','Most points after 3 rounds wins.'],[],'scatter'),
+G(4,'20 Questions','word','2+ players','Guess the secret person, place or thing.',['One player thinks of a person, place or thing.','Others ask up to <b>20 yes/no questions</b>.','Try “Is it alive?”, “Is it bigger than a car?”, “Can you eat it?”','Questioners try to guess before the 20 questions are used up.','If they guess correctly they win; otherwise the thinker wins.','Rotate who thinks of the object.'],[],'twenty'),
+G(5,'Once Upon a Time','story','2–4 players (can adapt for more)','Tell a story and play your cards as you go.',['Each player gets story cards (characters, items, places, events).','Players take turns adding to a collaborative story.','Play a card from your hand when it is mentioned in the story.','First to use all their cards <b>and</b> play their “ending” card wins.','Others can interrupt if you pause or contradict yourself.'],[['No cards?','The Play tools tab deals digital hands. Or write topic cards on paper: characters, settings, objects, events.']],'ouat'),
+G(6,'Just a Minute','story','3+ players','Speak for 60 seconds without hesitation, repetition or deviation.',['Give a player a random topic (“My favourite food”, “Robots”, “Rainy days”).','They must speak for 60 seconds without:<ul><li><b>Hesitation</b> (long pauses)</li><li><b>Repetition</b> (saying the same word/phrase)</li><li><b>Deviation</b> (going off-topic)</li></ul>','Other players challenge if a rule is broken.','If the challenge succeeds, the challenger continues speaking.','Whoever is speaking when 60 seconds ends gets a point.'],[],'jam'),
+G(7,'Fortunately / Unfortunately','story','4+ players (whole class works)','Build a story that swings between good and bad luck.',['Start a story: “Once there was a boy who found a treasure map.”','Next player adds “Fortunately…” plus a positive development — “Fortunately, he had a shovel.”','Next adds “Unfortunately…” plus a problem — “Unfortunately, the map was in Chinese.”','Continue alternating.','The story builds collaboratively for 5–10 rounds.','No scoring — focus on creativity!'],[],'fortunately'),
+G(8,'Two Truths and a Lie','comp','3+ players (whole class)','Spot the false statement.',['One player states three “facts” about themselves or a topic.','Two are true; one is false.','Others discuss and vote on which is the lie.','The player reveals the answer.','<b>Variation:</b> use curriculum facts (“Singapore facts”, “Science facts”).','Rotate to the next player.'],[],'truths'),
+G(9,'Who Am I?','comp','2+ players','Guess the sticky note on your forehead.',['Write a character, famous person or vocabulary word on a sticky note.','Stick it on another player’s forehead (they cannot see it).','They ask yes/no questions: “Am I real?” “Am I from a book?”','Set a question limit (10–15) or a time limit.','If they guess correctly, they win.'],[['P5/6 adaptation','Use historical figures, book characters or vocabulary words.']],'whoami'),
+G(10,'Boggle','quick','2–6 players','Find words in a 4×4 grid of letters.',['Shake 16 letter dice in a 4×4 grid tray.','Set a timer for 3 minutes.','Find words by connecting adjacent letters (horizontal, vertical, diagonal).','Letters must touch; you cannot reuse the same die in one word.','Words must be 3+ letters.','<b>Scoring:</b> 3-letter = 1pt, 4-letter = 1pt, 5-letter = 2pts, 6-letter = 3pts, etc.','Cross off duplicates; only unique words score.'],[['DIY version','Write random letters on a 4×4 grid.']],'boggle'),
+G(11,'Contact','quick','4+ players','Guess the leader’s word before they can block you.',['One player (the leader) thinks of a word and reveals its first letter: “My word starts with C.”','Others try to guess by giving clues to each other. Player A: “Is it something you drive?”','If Player B understands, they say “CONTACT!”, both count to 3 and say their guess together.','If they match (“CAR! CAR!”), the leader must reveal the next letter.','The leader can “block” by guessing what they are thinking and saying it first.','Continue until the word is fully revealed or guessed.'],[],'contact'),
+G(12,'Word Association Chain','quick','3+ players (whole class)','Keep the chain going without repeating or pausing.',['The first player says a word (e.g. “ocean”).','The next says a related word (“waves”).','The next continues the chain (“surfing”).','<b>Rules:</b><ul><li>Must be clearly related to the previous word</li><li>No repeating words already said</li><li>Hesitate more than 3 seconds and you are out</li></ul>','Last player standing wins.','<b>Challenge mode:</b> players explain their connection if challenged.'],[],'chain'),
+G(13,'Hangman (Enhanced)','quick','2+ players / teams','Guess the word before the hangman is drawn.',['One player thinks of a word or phrase and draws blanks for each letter.','Others guess letters one at a time.','Correct guess = letter filled in; wrong guess = a body part is drawn.','Win by completing the word before the hangman is finished (typically 6–8 wrong guesses).'],[['P5/6 enhancements','Use themed word lists (idioms, PSLE vocabulary, book titles). Add hints after 3 wrong guesses. Team version: teams alternate guessing.']],'hangman'),
+G(14,'Pictionary','create','4+ players (2+ teams)','Draw it — no words, letters or numbers.',['Divide into teams.','One player draws a word from a card (no speaking, no writing letters or numbers).','Their team has 60 seconds to guess.','The drawer can only draw pictures.','Correct guess = 1 point.','Rotate the drawer; the team with the most points wins.'],[['Categories','Objects, Actions, Difficult (idioms / abstract concepts)']],'pictionary'),
+G(15,'Charades','create','4+ players (2+ teams)','Act it out silently.',['A player draws a card (book title, phrase, movie, action).','They act it out silently in front of their team.','Use the standard signals (see Play tools tab).','The team has 2–3 minutes to guess.','No speaking, pointing at objects, or mouthing words.','The team with the most correct guesses wins.'],[['Signals','Book = hands together like opening a book · Movie = crank an old camera · Number of words = hold up fingers · Syllables = lay fingers on arm · “Sounds like” = pull ear']],'charades'),
+G(16,'Story Cubes','create','1+ players (great for groups)','Roll the images and weave them into one story.',['Roll 6–9 dice with images on each side.','The player must create a story using <b>ALL</b> the images shown.','The story should connect the images logically.'],[['Variations','<b>Solo:</b> create the best story you can · <b>Competitive:</b> a judge votes for the best · <b>Collaborative:</b> each person adds one sentence using one cube · <b>Timed:</b> 3-minute storytelling challenge'],['DIY','Draw simple icons on wooden cubes or paper dice templates.']],'cubes'),
+G(17,'Codenames','logic','4+ players (2 teams)','Give one-word clues that link several words.',['Lay out 25 word cards in a 5×5 grid.','Each team has a “spymaster” who can see which words belong to their team.','The spymaster gives ONE-WORD clue + a number: “Animals, 3.”','The team discusses and touches the cards they think match.','Correct = reveal your team colour; opponent’s card helps them; the assassin = instant loss.','First team to find all their words wins.'],[['Simplified P5/6 version','Use a 3×3 grid with 9 words and simpler vocabulary.']],'codenames'),
+G(18,'Apples to Apples Junior','logic','4–8 players','Match a noun to the adjective — the judge decides.',['Each player holds 5 red cards (nouns).','The judge flips a green card (adjective): “Scary.”','All players choose the red card from their hand that matches best.','The judge shuffles the submitted cards and reads them aloud.','The judge picks a favourite (funny, literal or creative).','The winner keeps the green card; first to 4 green cards wins.','Rotate the judge each round.'],[['Example','“Scary” might be matched with “Spiders”, “Tests” or “Thunderstorms”.']],'apples'),
+G(19,'Sentence Relay','logic','2+ teams (3–5 per team)','Build a long sentence one word at a time — grammar must hold.',['The teacher gives a simple sentence starter: “The cat sat”.','The first player from Team A adds a word or phrase: “The cat sat on”.','The first player from Team B continues: “The cat sat on the”.','Keep adding to make the sentence longer but <b>grammatically correct</b>.','If a player makes the sentence incorrect or cannot continue within 10 seconds, the other team wins the round.','Best of 5 rounds.'],[['Challenge version','Specify the part of speech to add (adjective, prepositional phrase, clause).']],'relay'),
+G(20,'Singlish vs Standard English','sg','2+ teams','Translate between registers — and discuss when each fits.',['The teacher/host reads a Singlish phrase: “Can lah, no problem one.”','Teams write down the standard English equivalent.','First correct answer gets a point: “Yes, it’s no problem at all.”','Discuss when each register is appropriate.','<b>Reverse mode:</b> give standard English; convert it to natural Singlish.'],[['Learning value','Understanding code-switching for the PSLE oral exam.']],'singlish')
+];
+
+/* ---------- views ---------- */
+const app=document.getElementById('app');
+function home(){
+  let q='',cat='all';const list=h('div',{});
+  const draw=()=>{list.replaceChildren();Object.entries(CATS).forEach(([k,c])=>{if(cat!=='all'&&cat!==k)return;const gs=GAMES.filter(g=>g.cat===k&&(g.name+' '+g.tag+' '+c.name).toLowerCase().includes(q));if(!gs.length)return;list.append(h('h3',{class:'catname',style:'--c:'+c.c},c.name),h('div',{class:'grid'},gs.map(g=>h('a',{class:'gcard',href:'#/game/'+g.n,style:'--c:'+c.c},h('span',{class:'n'},'#'+g.n),h('span',{class:'t'},g.name),h('span',{class:'d'},g.tag),h('span',{class:'p'},'👥 '+g.players)))));});if(!list.children.length)list.append(h('p',{class:'muted'},'No games match.'));};
+  app.replaceChildren(h('div',{class:'hero'},h('h2',{},'20 English games for P5/6'),h('p',{},'Pick a game: read the rules, then run it from the Play tools tab — timers, scoreboards, card decks and generators included.'),h('a',{class:'back',href:'#/vocab'},'📚 Browse the 200-word P5 & P6 vocabulary list')),h('div',{class:'controls'},h('input',{type:'search',placeholder:'Search games…','aria-label':'Search games',oninput:e=>{q=e.target.value.toLowerCase();draw();}})),chipRow([['all','All'],...Object.entries(CATS).map(([k,c])=>[k,c.name])],'all',k=>{cat=k;draw();}),list);draw();
+}
+const CATS={word:{name:'Word & Vocabulary',c:'#d9482b'},story:{name:'Communication & Storytelling',c:'#128a80'},comp:{name:'Comprehension & Analysis',c:'#6150d6'},quick:{name:'Quick-Fire Word Games',c:'#b86e00'},create:{name:'Creative Expression',c:'#d62f64'},logic:{name:'Logic & Language',c:'#2271c4'},sg:{name:'Singapore-Specific',c:'#238a3e'}};
+function gamePage(g){
+  const c=CATS[g.cat],prev=GAMES[g.n-2],next=GAMES[g.n];
+  const how=h('div',{},h('ol',{class:'steps'},g.steps.map(x=>h('li',{html:x}))),g.notes.map(([a,b])=>h('div',{class:'note'},h('b',{},a+': '),h('span',{html:b}))));
+  const toolPane=h('div',{style:'display:none'});let built=false;
+  const t1=h('button',{class:'tab on',onclick:()=>sw(0)},'📖 How to play'),t2=h('button',{class:'tab',onclick:()=>sw(1)},'🎛️ Play tools');
+  function sw(i){t1.classList.toggle('on',i===0);t2.classList.toggle('on',i===1);how.style.display=i===0?'':'none';toolPane.style.display=i===1?'':'none';if(i===1&&!built){built=true;const m=h('div',{}),s=h('div',{});toolPane.append(h('div',{class:'toolgrid'},m,s));TOOLS[g.tool](m,s);}}
+  app.replaceChildren(h('div',{class:'nav'},h('a',{href:'#/'},'← All games'),h('span',{},prev&&h('a',{href:'#/game/'+prev.n},'◀ '+prev.name),' ',next&&h('a',{href:'#/game/'+next.n},next.name+' ▶'))),h('div',{style:'--c:'+c.c},h('div',{class:'ghead'},h('div',{class:'meta'},'#'+g.n+' · '+c.name),h('h2',{},g.name),h('div',{class:'meta'},'👥 '+g.players)),h('div',{class:'tabs'},t1,t2),how,toolPane));
+}
+function vocabPage(){
+  let q='',lv='all',hide=false;const list=h('div',{class:'vl'});
+  const draw=()=>{const rows=VOCAB.filter(v=>(lv==='all'||v.l===lv)&&(v.w+' '+v.d).toLowerCase().includes(q));list.replaceChildren(...(rows.length?rows.map((v,i)=>h('div',{class:'vrow'},h('span',{class:'lvl lvl'+v.l},'P'+v.l),h('b',{},v.w),h('span',{class:'vd'+(hide?' blur':''),onclick:e=>{if(hide)e.currentTarget.classList.toggle('blur');}},v.d))):[h('p',{class:'muted'},'No words match.')]));};
+  app.replaceChildren(h('a',{class:'back',href:'#/'},'← All games'),h('div',{class:'hero'},h('h2',{},'P5 & P6 vocabulary'),h('p',{},'All 200 words used across the games. Tick “hide definitions” to run it as a flash-card drill (tap a definition to reveal).')),h('div',{class:'controls'},h('input',{type:'search',placeholder:'Search words or meanings…','aria-label':'Search',oninput:e=>{q=e.target.value.toLowerCase();draw();}}),h('label',{class:'chip'},h('input',{type:'checkbox',onchange:e=>{hide=e.target.checked;draw();}}),' Hide definitions')),chipRow([['all','All 200'],[5,'P5 (100)'],[6,'P6 & PSLE (100)']],'all',k=>{lv=k;draw();}),list);draw();
+}
+function route(){cleanups.forEach(f=>{try{f();}catch(e){}});cleanups=[];window.scrollTo(0,0);const m=location.hash.match(/#\/game\/(\d+)/);const g=m&&GAMES[+m[1]-1];location.hash==='#/vocab'?vocabPage():g?gamePage(g):home();document.title=g?g.name+' · English Games Hub':'English Games Hub';}
+window.addEventListener('hashchange',route);
+let scale=1;const setScale=d=>{scale=Math.min(1.8,Math.max(.8,scale+d));document.documentElement.style.setProperty('--scale',scale);};
+document.getElementById('larger').onclick=()=>setScale(.1);document.getElementById('smaller').onclick=()=>setScale(-.1);
+document.getElementById('fs').onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}catch(e){}};
+route();
+</script>
+</body>
+</html>
